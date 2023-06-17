@@ -8,8 +8,8 @@ namespace Summer2022Proj0.library.Models
 {
     public class Employee
     {
-        public string? Name { get; set; }
         public int Id { get; set; }
+        public string? Name { get; set; }
         public decimal Rate { get; set; }
     }
 }
