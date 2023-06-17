@@ -12,14 +12,12 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
     <ShellContent
-        Title="Project"
-        ContentTemplate="{DataTemplate local2:ProjectView}"
-        Route="Project"
-        />
-    <ShellContent
-        Title="Course"
+        Title="Client Management"
         ContentTemplate="{DataTemplate local2:ClientView}"
-        Route="Client"
-        />
+        Route="Clients" />
+    <ShellContent
+        Title="Client Details"
+        ContentTemplate="{DataTemplate local2:ClientDetailView}"
+        Route="ClientDetail" />
 
 </Shell>

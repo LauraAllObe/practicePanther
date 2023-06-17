@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proj0.MAUI.Views.ClientDetailView"
+             Title="ClientDetailView">
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="11*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Column="0" Grid.Row="0"
+            Text="Name" VerticalOptions="Center"/>
+            <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Path=Model.Name}"/>
+            
+            <Label Grid.Row="1"
+            Text="Active" VerticalOptions="Center"/>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Text="YES" Clicked="YesClicked"/>
+                <Button Grid.Column="1" Text="NO" Clicked="NoClicked"/>
+            </Grid>
+            
+            <Label Grid.Row="2" Grid.Column="0"
+            Text="Notes" VerticalOptions="Center"/>
+            <Entry Grid.Column="1" Grid.Row="2" Text="{Binding Path=Model.Notes}"/>
+
+            <Label Grid.Column="0" Grid.Row="3"
+                   Text="Open Date " VerticalOptions="Center"/>
+            <Grid Grid.Row="3" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Text="Time" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Column="1" Text="{Binding Path=openTime}"/>
+                <Label Grid.Column="2" Text="Month" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Column="3" Text="{Binding Path=openMonth}" Keyboard="Numeric"/>
+                <Label Grid.Column="4" Text="Day" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Column="5" Text="{Binding Path=openDay}" Keyboard="Numeric"/>
+                <Label Grid.Column="6" Text="Year" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Column="7" Text="{Binding Path=openYear}" Keyboard="Numeric"/>
+            </Grid>
+
+            <Label Grid.Column="0" Grid.Row="4"
+                   Text="Closed Date " VerticalOptions="Center"/>
+            <Grid Grid.Row="4" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Text="Time" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Column="1" Text="{Binding Path=closedTime}"/>
+                <Label Grid.Column="2" Text="Month" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Column="3" Text="{Binding Path=closedMonth}" Keyboard="Numeric"/>
+                <Label Grid.Column="4" Text="Day" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Column="5" Text="{Binding Path=closedDay}" Keyboard="Numeric"/>
+                <Label Grid.Column="6" Text="Year" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Column="7" Text="{Binding Path=closedYear}" Keyboard="Numeric"/>
+            </Grid>
+        </Grid>
+        <Button Text="OK" Clicked="OkClicked"/>
+    </VerticalStackLayout>
+</ContentPage>
