@@ -9,7 +9,6 @@ public partial class ClientView : ContentPage
         InitializeComponent();
         //BindingContext = new ClientViewViewModel();
     }
-    //test change
 
     private void DeleteClicked(object sender, EventArgs e)
     {
