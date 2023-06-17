@@ -2,38 +2,31 @@ using Proj0.MAUI.ViewModels;
 
 namespace Proj0.MAUI.Views;
 
-[QueryProperty(nameof(PersonId), "personId")]
-
 public partial class ClientView : ContentPage
 {
     public ClientView()
     {
         InitializeComponent();
-        BindingContext = new ClientViewModel();
+        //BindingContext = new ClientViewViewModel();
     }
-    public int PersonId { get; set; }
-    public void OnArriving(Object sender, NavigatedToEventArgs e)
+
+    private void DeleteClicked(object sender, EventArgs e)
     {
-        BindingContext = new ClientViewModel(PersonId);
+        (BindingContext as ClientViewViewModel).RefreshClientList();
     }
-    public void OnLeaving(Object sender, NavigatedFromEventArgs e)
+
+    private void GoBackClicked(object sender, EventArgs e)
     {
-        BindingContext = null;
+        Shell.Current.GoToAsync("//MainPage");
     }
-    private void DeleteClick(object sender, EventArgs e)
+
+    private void AddClicked(object sender, EventArgs e)
     {
-        (BindingContext as ClientViewModel).Delete();
+        Shell.Current.GoToAsync("//ClientDetail");
     }
-    private void AddClick(Object sender, EventArgs e)
+
+    private void OnArrived(object sender, NavigatedToEventArgs e)
     {
-        (BindingContext as ClientViewModel).Add();
-    }
-    private void EditClick(Object sender, EventArgs e)
-    {
-        (BindingContext as ClientViewModel).Edit();
-    }
-    private void CloseClick(Object sender, EventArgs e)
-    {
-        (BindingContext as ClientViewModel).Close();
+        (BindingContext as ClientViewViewModel).RefreshClientList();
     }
 }

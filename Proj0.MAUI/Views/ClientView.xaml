@@ -1,91 +1,48 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="ClientView"
+             xmlns:vm="clr-namespace:Proj0.MAUI.ViewModels"
              x:Class="Proj0.MAUI.Views.ClientView"
-             NavigatedFrom="OnLeaving"
-             NavigatedTo="OnArriving">
-    <ScrollView>
+             Title="ClientView"
+             NavigatedTo="OnArrived">
+    <ContentPage.BindingContext>
+        <vm:ClientViewViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="5*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Text="Name"></Label>
-                <Entry Grid.Column="1" Text="{Binding Path=NameChange}"></Entry>
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Text="Notes"></Label>
-                <Entry Grid.Column="1" Text="{Binding Path=NotesChange}"></Entry>
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Text="Open Date"></Label>
-                <Entry Grid.Column="1" Text="{Binding Path=OpenDateChange}"></Entry>
-            </Grid>
-
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Text="Closed Date"></Label>
-                <Entry Grid.Column="1" Text="{Binding Path=ClosedDateChange}"></Entry>
-            </Grid>
-
-            <Grid Grid.Row="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Text="Active State"></Label>
-                <Entry Grid.Column="1" Text="{Binding Path=ActiveChange}"></Entry>
-            </Grid>
-
-            <Grid Grid.Row="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <ListView
-                        ItemsSource="{Binding Path=Projects, Mode=TwoWay}"
-                        SelectedItem="{Binding Path=SelectedProject}">
-                    </ListView>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Button Text="Add" Grid.Column="0" Clicked="AddClick"></Button>
-                        <Button Text="Edit" Grid.Column="1" Clicked="EditClick"></Button>
-                        <Button Text="Delete" Grid.Column="2" Clicked="DeleteClick"></Button>
-                        <Button Text="Close" Grid.Column="3" Clicked="CloseClick"></Button>
-                    </Grid>
-                </Grid>
-            </Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0"></Entry>
+            <Button Grid.Column="1" Text="Search"></Button>
+            <Button Grid.Column="2" Text="Add" Clicked="AddClicked"></Button>
         </Grid>
-    </ScrollView>
+        <ListView 
+            ItemsSource="{Binding Path=Clients}"
+            SelectedItem="{Binding Path=SelectedClient}"
+            >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="12*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0"  Text="{Binding Path=Display}" VerticalOptions="Center"/>
+                            <Button Grid.Column="1" 
+                                    Text="Delete" 
+                                    Command="{Binding Path=DeleteCommand}" 
+                                    CommandParameter="{Binding}"
+                                    Clicked="DeleteClicked"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--<Button Text="Delete" Clicked="DeleteClicked"/>-->
+        <Button Text="Go Back" Clicked="GoBackClicked"/>
+    </VerticalStackLayout>
 </ContentPage>

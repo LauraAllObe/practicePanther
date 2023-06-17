@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +52,27 @@ namespace Summer2022Proj0.library.Services
         }
         public void Add(Client? client)
         {
+            bool clientExists = false;
+            int validId = 0;
+            for (int i = 1; i > 0; i++)
+            {
+                foreach(Client? each in clients)
+                {
+                    if (i == each.Id)
+                    {
+                        clientExists = true;
+                        break;
+                    }
+                }
+                if (clientExists == false)
+                {
+                    validId = i;
+                    break;
+                }
+                clientExists = false;
+            }
+            if(validId != 0 && client != null)
+                client.Id = validId;
             if (client != null)
             {
                 clients.Add(client);
