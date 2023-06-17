@@ -19,6 +19,7 @@
             <Button Grid.Column="1" Text="Search"></Button>
             <Button Grid.Column="2" Text="Add" Clicked="AddClicked"></Button>
         </Grid>
+        
         <ListView 
             ItemsSource="{Binding Path=Clients}"
             SelectedItem="{Binding Path=SelectedClient}"
