@@ -8,6 +8,7 @@
     <ContentPage.BindingContext>
         <vm:ClientViewViewModel/>
     </ContentPage.BindingContext>
+    
     <VerticalStackLayout>
         <Grid>
             <Grid.ColumnDefinitions>
