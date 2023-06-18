@@ -23,9 +23,9 @@
             Text="Name" VerticalOptions="Center"/>
             <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Path=Model.Name}"/>
             
-            <Label Grid.Row="1"
+            <Label Grid.Row="1" IsVisible="{Binding Path=IsActiveVisible}"
             Text="Active" VerticalOptions="Center"/>
-            <Grid Grid.Row="1" Grid.Column="1">
+            <Grid Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=IsActiveVisible}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>

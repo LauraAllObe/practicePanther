@@ -94,5 +94,17 @@ namespace Summer2022Proj0.library.Services
         {
             return clients.Where(s => s.Name.ToUpper().Contains(query.ToUpper())).ToList();
         }
+
+        public bool allProjectsClosed(Client client)
+        {
+            foreach (Project project in client.Projects)
+            {
+                if (project.IsActive == true)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

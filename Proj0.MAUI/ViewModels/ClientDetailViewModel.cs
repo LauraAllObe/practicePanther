@@ -35,10 +35,11 @@ namespace Proj0.MAUI.ViewModels
             ClientService.Current.Delete(id);
         }
 
+        public bool IsActiveVisible { get; set; }
+
         public ICommand EditCommand { get; private set; }
         public void ExecuteEdit(int id)
         {
-            //Shell.Current.GoToAsync("//ClientDetail");
             Shell.Current.GoToAsync($"//ClientDetail?clientId={id}");
         }
 
@@ -54,8 +55,12 @@ namespace Proj0.MAUI.ViewModels
             closedMonth = Model.ClosedDate.Month;
             openYear = Model.OpenDate.Year;
             closedYear = Model.ClosedDate.Year;
+            if (ClientService.Current.allProjectsClosed(Model))
+                IsActiveVisible = true;
+            else
+                IsActiveVisible = false;
 
-        DeleteCommand = new Command(
+            DeleteCommand = new Command(
                 (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));//first
             EditCommand = new Command(
                 (c) => ExecuteEdit((c as ClientDetailViewModel).Model.Id));
@@ -73,6 +78,10 @@ namespace Proj0.MAUI.ViewModels
             closedMonth = Model.ClosedDate.Month;
             openYear = Model.OpenDate.Year;
             closedYear = Model.ClosedDate.Year;
+            if (ClientService.Current.allProjectsClosed(Model))
+                IsActiveVisible = true;
+            else
+                IsActiveVisible = false;
 
             DeleteCommand = new Command(
                     (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));//first
@@ -92,6 +101,10 @@ namespace Proj0.MAUI.ViewModels
             closedMonth = Model.ClosedDate.Month;
             openYear = Model.OpenDate.Year;
             closedYear = Model.ClosedDate.Year;
+            if (ClientService.Current.allProjectsClosed(Model))
+                IsActiveVisible = true;
+            else
+                IsActiveVisible = false;
 
             DeleteCommand = new Command(
                 (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));
