@@ -1,4 +1,6 @@
 using Proj0.MAUI.ViewModels;
+using Summer2022Proj0.library.Models;
+using Summer2022Proj0.library.Services;
 
 namespace Proj0.MAUI.Views;
 
@@ -9,7 +11,7 @@ public partial class ClientView : ContentPage
         InitializeComponent();
         //BindingContext = new ClientViewViewModel();
     }
-
+    
     private void DeleteClicked(object sender, EventArgs e)
     {
         (BindingContext as ClientViewViewModel).RefreshClientList();
@@ -23,6 +25,11 @@ public partial class ClientView : ContentPage
     private void AddClicked(object sender, EventArgs e)
     {
         Shell.Current.GoToAsync("//ClientDetail");
+    }
+
+    private void EditClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ClientViewViewModel).RefreshClientList();
     }
 
     private void OnArrived(object sender, NavigatedToEventArgs e)

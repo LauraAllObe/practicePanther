@@ -35,18 +35,68 @@ namespace Proj0.MAUI.ViewModels
             ClientService.Current.Delete(id);
         }
 
+        public ICommand EditCommand { get; private set; }
+        public void ExecuteEdit(int id)
+        {
+            //Shell.Current.GoToAsync("//ClientDetail");
+            Shell.Current.GoToAsync($"//ClientDetail?clientId={id}");
+        }
+
         public ClientDetailViewModel(Client client)
         {
             Model = client;
+
+            openTime = Model.OpenDate.TimeOfDay.ToString();
+            closedTime = Model.ClosedDate.TimeOfDay.ToString();
+            openDay = Model.OpenDate.Day;
+            closedDay = Model.ClosedDate.Day;
+            openMonth = Model.OpenDate.Month;
+            closedMonth = Model.ClosedDate.Month;
+            openYear = Model.OpenDate.Year;
+            closedYear = Model.ClosedDate.Year;
+
+        DeleteCommand = new Command(
+                (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));//first
+            EditCommand = new Command(
+                (c) => ExecuteEdit((c as ClientDetailViewModel).Model.Id));
+        }
+
+        public ClientDetailViewModel(int id)
+        {
+            Model = ClientService.Current.Get(id);
+
+            openTime = Model.OpenDate.TimeOfDay.ToString();
+            closedTime = Model.ClosedDate.TimeOfDay.ToString();
+            openDay = Model.OpenDate.Day;
+            closedDay = Model.ClosedDate.Day;
+            openMonth = Model.OpenDate.Month;
+            closedMonth = Model.ClosedDate.Month;
+            openYear = Model.OpenDate.Year;
+            closedYear = Model.ClosedDate.Year;
+
             DeleteCommand = new Command(
-                (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));
+                    (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));//first
+            EditCommand = new Command(
+                (c) => ExecuteEdit((c as ClientDetailViewModel).Model.Id));
         }
 
         public ClientDetailViewModel()
         {
             Model = new Client();
+
+            openTime = Model.OpenDate.TimeOfDay.ToString();
+            closedTime = Model.ClosedDate.TimeOfDay.ToString();
+            openDay = Model.OpenDate.Day;
+            closedDay = Model.ClosedDate.Day;
+            openMonth = Model.OpenDate.Month;
+            closedMonth = Model.ClosedDate.Month;
+            openYear = Model.OpenDate.Year;
+            closedYear = Model.ClosedDate.Year;
+
             DeleteCommand = new Command(
                 (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));
+            EditCommand = new Command(
+                (c) => ExecuteEdit((c as ClientDetailViewModel).Model.Id));
         }
 
         public void Add()
@@ -55,6 +105,13 @@ namespace Proj0.MAUI.ViewModels
             Model.stringToClosedDate(closedMonth.ToString() + '/' + closedDay.ToString() + '/' + closedYear.ToString() + ' ' + closedTime);
 
             ClientService.Current.Add(Model);
+            Model = new Client();
+        }
+
+        public void Edit()
+        {
+            Model.stringToOpenDate(openMonth.ToString() + '/' + openDay.ToString() + '/' + openYear.ToString() + ' ' + openTime);
+            Model.stringToClosedDate(closedMonth.ToString() + '/' + closedDay.ToString() + '/' + closedYear.ToString() + ' ' + closedTime);
             Model = new Client();
         }
 
