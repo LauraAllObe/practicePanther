@@ -12,5 +12,10 @@ namespace Proj0.MAUI
         {
             Shell.Current.GoToAsync("//Clients");
         }
+
+        private void EmployeesClicked(object sender, EventArgs e)
+        {
+            Shell.Current.GoToAsync("//Employees");
+        }
     }
 }

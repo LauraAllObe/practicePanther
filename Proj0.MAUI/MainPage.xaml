@@ -9,7 +9,7 @@
             Padding="30,0"
             VerticalOptions="Center">
             <Button Text="Manage Clients &amp; Projects" Clicked="ClientsClicked"></Button>
-            <Button Text="Manage Employees"></Button>
+            <Button Text="Manage Employees" Clicked="EmployeesClicked"></Button>
             <Button Text="Enter Time"></Button>
         </VerticalStackLayout>
     </ScrollView>
