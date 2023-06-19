@@ -10,7 +10,7 @@
             VerticalOptions="Center">
             <Button Text="Manage Clients &amp; Projects" Clicked="ClientsClicked"></Button>
             <Button Text="Manage Employees" Clicked="EmployeesClicked"></Button>
-            <Button Text="Enter Time"></Button>
+            <Button Text="Enter Time" Clicked="TimesClicked"></Button>
         </VerticalStackLayout>
     </ScrollView>
 
