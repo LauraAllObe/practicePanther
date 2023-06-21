@@ -30,8 +30,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Text="YES" Clicked="YesClicked"/>
-                <Button Grid.Column="1" Text="NO" Clicked="NoClicked"/>
+                <Button Grid.Column="0" Text="YES" Clicked="YesClicked"
+                        ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\yes.png"/>
+                <Button Grid.Column="1" Text="NO" Clicked="NoClicked"
+                        ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\no.png"/>
             </Grid>
             
             <Label Grid.Row="2" Grid.Column="0"
@@ -84,6 +86,7 @@
                 <Entry Grid.Column="7" Text="{Binding Path=closedYear}" Keyboard="Numeric"/>
             </Grid>
         </Grid>
-        <Button Text="OK" Clicked="OkClicked"/>
+        <Button Text="SAVE" Clicked="OkClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\save.png"/>
     </VerticalStackLayout>
 </ContentPage>

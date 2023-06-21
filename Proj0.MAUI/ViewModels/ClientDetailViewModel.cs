@@ -69,7 +69,8 @@ namespace Proj0.MAUI.ViewModels
         public ClientDetailViewModel(int id)
         {
             Model = ClientService.Current.Get(id);
-
+            if (Model == null)
+                Model = new Client();
             openTime = Model.OpenDate.TimeOfDay.ToString();
             closedTime = Model.ClosedDate.TimeOfDay.ToString();
             openDay = Model.OpenDate.Day;

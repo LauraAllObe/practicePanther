@@ -23,6 +23,7 @@
             Text="Rate" VerticalOptions="Center"/>
             <Entry Grid.Column="1" Grid.Row="1" Text="{Binding Path=Model.Rate}"/>
         </Grid>
-        <Button Text="OK" Clicked="OkClicked"/>
+        <Button Text="SAVE" Clicked="OkClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\save.png"/>
     </VerticalStackLayout>
 </ContentPage>
