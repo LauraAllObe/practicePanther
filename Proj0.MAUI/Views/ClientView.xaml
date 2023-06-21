@@ -12,13 +12,18 @@
     <VerticalStackLayout>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="11*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Entry Grid.Column="0"></Entry>
-            <Button Grid.Column="1" Text="Search"></Button>
-            <Button Grid.Column="2" Text="Add" Clicked="AddClicked"></Button>
+            <ImageButton Grid.Column="1" 
+                         Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\search.png"
+                         ></ImageButton>
+            <ImageButton Grid.Column="2" 
+                         Clicked="AddClicked"
+                         Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\add.png"
+                         ></ImageButton>
         </Grid>
 
         <ListView 
@@ -30,27 +35,37 @@
                     <ViewCell>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="12*"/>
+                                <ColumnDefinition Width="14*"/>
+                                <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0"  Text="{Binding Path=Display}" VerticalOptions="Center"/>
-                            <Button Grid.Column="1" 
-                                    Text="Edit" 
+                            <ImageButton
+                                    Grid.Column="1" 
+                                    Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\project.png"
+                                />
+                            <ImageButton
+                                    Grid.Column="2" 
                                     Command="{Binding Path=EditCommand}" 
                                     CommandParameter="{Binding}"
-                                    Clicked="EditClicked"/>
-                            <Button Grid.Column="2" 
-                                    Text="Delete" 
+                                    Clicked="EditClicked"
+                                    Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\edit.png"
+                                />
+                            <ImageButton
+                                Grid.Column="3" 
                                     Command="{Binding Path=DeleteCommand}" 
                                     CommandParameter="{Binding}"
-                                    Clicked="DeleteClicked"/>
+                                    Clicked="DeleteClicked"
+                                    Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\delete.png"
+                                />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <!--<Button Text="Delete" Clicked="DeleteClicked"/>-->
-        <Button Text="Go Back" Clicked="GoBackClicked"/>
+        <Button Text="Go Back" Clicked="GoBackClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\back.png"/>
     </VerticalStackLayout>
 </ContentPage>

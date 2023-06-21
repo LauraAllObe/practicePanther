@@ -58,6 +58,7 @@
             Text="Employee Id" VerticalOptions="Center"/>
             <Entry Grid.Column="1" Grid.Row="4" Text="{Binding Path=empId}"/>
         </Grid>
-        <Button Text="OK" Clicked="OkClicked"/>
+        <Button Text="SAVE" Clicked="OkClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\save.png"/>
     </VerticalStackLayout>
 </ContentPage>

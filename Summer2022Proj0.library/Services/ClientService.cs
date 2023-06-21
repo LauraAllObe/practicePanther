@@ -30,7 +30,7 @@ namespace Summer2022Proj0.library.Services
         private List<Client> clients;
         private ClientService()
         {
-            Project p = new Project { ClientId = 1, ClosedDate = DateTime.Now, Id = 1};
+            Project p = new Project { ClientId = 1, ClosedDate = DateTime.Now, Id = 1, IsActive = false};
             List<Project> pc = new List<Project>();
             pc.Add(p);
             //clients = new List<Client>();
