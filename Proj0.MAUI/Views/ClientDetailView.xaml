@@ -18,27 +18,30 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+
             <Label Grid.Column="0" Grid.Row="0"
             Text="Name" VerticalOptions="Center"/>
-            <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Path=Model.Name}"/>
-            
-            <Label Grid.Row="1" IsVisible="{Binding Path=IsActiveVisible}"
-            Text="Active" VerticalOptions="Center"/>
-            <Grid Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=IsActiveVisible}">
+            <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Text="YES" Clicked="YesClicked"
+                <Entry Grid.Column="0" Text="{Binding Path=name}"/>
+                <Label Grid.Column="1" IsVisible="{Binding Path=IsActiveVisible}"
+                        Text="Closed?" VerticalOptions="Center"/>
+                <Button Grid.Column="2" Text="YES" Clicked="YesClicked"
+                        IsVisible="{Binding Path=IsActiveVisible}"
                         ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\yes.png"/>
-                <Button Grid.Column="1" Text="NO" Clicked="NoClicked"
+                <Button Grid.Column="3" Text="NO" Clicked="NoClicked"
+                        IsVisible="{Binding Path=IsActiveVisible}"
                         ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\no.png"/>
             </Grid>
             
             <Label Grid.Row="2" Grid.Column="0"
             Text="Notes" VerticalOptions="Center"/>
-            <Entry Grid.Column="1" Grid.Row="2" Text="{Binding Path=Model.Notes}"/>
+            <Entry Grid.Column="1" Grid.Row="2" Text="{Binding Path=notes}"/>
 
             <Label Grid.Column="0" Grid.Row="3"
                    Text="Open Date " VerticalOptions="Center"/>
@@ -86,7 +89,18 @@
                 <Entry Grid.Column="7" Text="{Binding Path=closedYear}" Keyboard="Numeric"/>
             </Grid>
         </Grid>
-        <Button Text="SAVE" Clicked="OkClicked"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="CANCEL" Clicked="CancelClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\cancel.png"/>
+            <Button Grid.Column="1" Text="UNDO" Clicked="UndoClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\undo.png"/>
+            <Button Grid.Column="2" Text="SAVE" Clicked="OkClicked"
                 ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\save.png"/>
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

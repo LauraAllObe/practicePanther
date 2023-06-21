@@ -23,6 +23,16 @@ public partial class EmployeeDetailView : ContentPage
         Shell.Current.GoToAsync("//Employees");
     }
 
+    private void CancelClicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//Employees");
+    }
+
+    private void UndoClicked(object sender, EventArgs e)
+    {
+        (BindingContext as EmployeeDetailViewModel).Undo();
+    }
+
     private void OnLeaving(object sender, NavigatedFromEventArgs e)
     {
         BindingContext = null;
