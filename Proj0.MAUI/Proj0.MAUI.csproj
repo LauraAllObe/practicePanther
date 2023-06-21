@@ -51,12 +51,15 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\add.png" />
 	  <None Remove="Resources\Images\back.png" />
+	  <None Remove="Resources\Images\cancel.png" />
+	  <None Remove="Resources\Images\check.png" />
 	  <None Remove="Resources\Images\delete.png" />
 	  <None Remove="Resources\Images\edit.png" />
 	  <None Remove="Resources\Images\no.png" />
 	  <None Remove="Resources\Images\project.png" />
 	  <None Remove="Resources\Images\save.png" />
 	  <None Remove="Resources\Images\search.png" />
+	  <None Remove="Resources\Images\undo.png" />
 	  <None Remove="Resources\Images\yes.png" />
 	</ItemGroup>
 

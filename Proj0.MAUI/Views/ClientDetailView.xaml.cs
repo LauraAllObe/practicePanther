@@ -23,14 +23,24 @@ public partial class ClientDetailView : ContentPage
         Shell.Current.GoToAsync("//Clients");
     }
 
+    private void CancelClicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//Clients");
+    }
+
+    private void UndoClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ClientDetailViewModel).Undo();
+    }
+
     private void YesClicked(object sender, EventArgs e)
     {
-        (BindingContext as ClientDetailViewModel).Active(true);
+        (BindingContext as ClientDetailViewModel).Active(false);
     }
 
     private void NoClicked(object sender, EventArgs e)
     {
-        (BindingContext as ClientDetailViewModel).Active(false);
+        (BindingContext as ClientDetailViewModel).Active(true);
     }
 
     private void OnLeaving(object sender, NavigatedFromEventArgs e)

@@ -2,14 +2,17 @@
 using Summer2022Proj0.library.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace Proj0.MAUI.ViewModels
 {
-    public class TimeDetailViewModel
+    public class TimeDetailViewModel : INotifyPropertyChanged
     {
         public Time Model { get; set; }
         public string Time { get; set; }
@@ -18,6 +21,8 @@ namespace Proj0.MAUI.ViewModels
         public int Day { get; set; }
         public int empId { get; set; }
         public int proId { get; set; }
+        public string narrative { get; set; }
+        public double hours { get; set; }
 
         public string Display
         {
@@ -41,15 +46,16 @@ namespace Proj0.MAUI.ViewModels
             Shell.Current.GoToAsync($"//TimeDetail?timeId={id}");
         }
 
-        public TimeDetailViewModel(Time time)
+        public void SetupCommands()
         {
-            Model = time;
             Time = Model.Date.TimeOfDay.ToString();
             Day = Model.Date.Day;
             Month = Model.Date.Month;
             Year = Model.Date.Year;
             empId = Model.EmployeeId;
             proId = Model.ProjectId;
+            narrative = Model.Narrative;
+            hours = Model.Hours;
 
             DeleteCommand = new Command(
                 (c) => ExecuteDelete((c as TimeDetailViewModel).Model.Id));//first
@@ -57,50 +63,55 @@ namespace Proj0.MAUI.ViewModels
                 (c) => ExecuteEdit((c as TimeDetailViewModel).Model.Id));
         }
 
+        public void Undo()
+        {
+            SetupCommands();
+            NotifyPropertyChanged(nameof(Time));
+            NotifyPropertyChanged(nameof(Day));
+            NotifyPropertyChanged(nameof(Month));
+            NotifyPropertyChanged(nameof(Year));
+            NotifyPropertyChanged(nameof(empId));
+            NotifyPropertyChanged(nameof(proId));
+            NotifyPropertyChanged(nameof(narrative));
+            NotifyPropertyChanged(nameof(hours));
+        }
+
+        public TimeDetailViewModel(Time time)
+        {
+            Model = time;
+            SetupCommands();
+        }
+
         public TimeDetailViewModel(int id)
         {
             Model = TimeService.Current.Get(id);
-
-            Time = Model.Date.TimeOfDay.ToString();
-            Day = Model.Date.Day;
-            Month = Model.Date.Month;
-            Year = Model.Date.Year;
-            empId = Model.EmployeeId;
-            proId = Model.ProjectId;
-
-            DeleteCommand = new Command(
-                    (c) => ExecuteDelete((c as TimeDetailViewModel).Model.Id));
-            EditCommand = new Command(
-                (c) => ExecuteEdit((c as TimeDetailViewModel).Model.Id));
+            SetupCommands();
         }
 
         public TimeDetailViewModel()
         {
             Model = new Time();
-
-            Time = Model.Date.TimeOfDay.ToString();
-            Day = Model.Date.Day;
-            Month = Model.Date.Month;
-            Year = Model.Date.Year;
-            empId = Model.EmployeeId;
-            proId = Model.ProjectId;
-
-            DeleteCommand = new Command(
-                (c) => ExecuteDelete((c as TimeDetailViewModel).Model.Id));
-            EditCommand = new Command(
-                (c) => ExecuteEdit((c as TimeDetailViewModel).Model.Id));
+            SetupCommands();
         }
 
         public void Add()
         {
+            Model.Narrative = narrative;
+            Model.Hours = hours;
             Model.stringToDate(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time);
             if(TimeService.Current.isValid(empId, proId))
+            {
+                Model.EmployeeId = empId;
+                Model.ProjectId = proId;
                 TimeService.Current.Add(Model);
+            }
             Model = new Time();
         }
 
         public void Edit()
         {
+            Model.Narrative = narrative;
+            Model.Hours = hours;
             Model.stringToDate(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time);
             if (TimeService.Current.isValid(empId, proId))
             {
@@ -108,6 +119,13 @@ namespace Proj0.MAUI.ViewModels
                 Model.ProjectId = proId;
             }
                 Model = new Time();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

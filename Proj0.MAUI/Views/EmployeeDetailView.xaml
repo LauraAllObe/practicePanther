@@ -8,22 +8,31 @@
     <VerticalStackLayout>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
 
-            <Label Grid.Column="0" Grid.Row="0"
+            <Label Grid.Column="0"
             Text="Name" VerticalOptions="Center"/>
-            <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Path=Model.Name}"/>
-            <Label Grid.Row="1" Grid.Column="0"
+            <Entry Grid.Column="1" Text="{Binding Path=name}"/>
+            <Label Grid.Column="2"
             Text="Rate" VerticalOptions="Center"/>
-            <Entry Grid.Column="1" Grid.Row="1" Text="{Binding Path=Model.Rate}"/>
+            <Entry Grid.Column="3" Text="{Binding Path=rate}"/>
         </Grid>
-        <Button Text="SAVE" Clicked="OkClicked"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="CANCEL" Clicked="CancelClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\cancel.png"/>
+            <Button Grid.Column="1" Text="UNDO" Clicked="UndoClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\undo.png"/>
+            <Button Grid.Column="2" Text="SAVE" Clicked="OkClicked"
                 ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\save.png"/>
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

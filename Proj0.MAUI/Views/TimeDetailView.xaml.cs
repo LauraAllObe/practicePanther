@@ -24,6 +24,16 @@ public partial class TimeDetailView : ContentPage
         Shell.Current.GoToAsync("//Times");
     }
 
+    private void CancelClicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//Times");
+    }
+
+    private void UndoClicked(object sender, EventArgs e)
+    {
+        (BindingContext as TimeDetailViewModel).Undo();
+    }
+
     private void OnLeaving(object sender, NavigatedFromEventArgs e)
     {
         BindingContext = null;
