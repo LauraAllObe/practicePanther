@@ -51,7 +51,7 @@ namespace Proj0.MAUI.ViewModels
             isActive = Model.IsActive;
             foreach(var project in ProjectService.Current.Projects)
             {
-                if (project.ClientId == Model.Id && project.IsActive == true)
+                if (project.ClientId == Model.Id && project.IsActive == true && Model.Id != 0)
                     IsActiveVisible = false;
                 else
                     IsActiveVisible = true;
