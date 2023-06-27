@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -47,10 +48,14 @@ namespace Proj0.MAUI.ViewModels
             closedYear = Model.ClosedDate.Year;
             name = Model.Name;
             notes = Model.Notes;
-            if (ClientService.Current.allProjectsClosed(Model))
-                IsActiveVisible = true;
-            else
-                IsActiveVisible = false;
+            isActive = Model.IsActive;
+            foreach(var project in ProjectService.Current.Projects)
+            {
+                if (project.ClientId == Model.Id && project.IsActive == true)
+                    IsActiveVisible = false;
+                else
+                    IsActiveVisible = true;
+            }
 
             DeleteCommand = new Command(
                 (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));
@@ -80,13 +85,21 @@ namespace Proj0.MAUI.ViewModels
             ClientService.Current.Delete(id);
         }
 
-        public bool IsActiveVisible { get; set; }
+        public ICommand AddCommand { get; private set; }
+        public void ExecuteAdd(int id)
+        {
+            Shell.Current.GoToAsync($"//ClientDetail?clientId={0}");
+        }
 
         public ICommand EditCommand { get; private set; }
         public void ExecuteEdit(int id)
         {
             Shell.Current.GoToAsync($"//ClientDetail?clientId={id}");
         }
+
+        public bool IsActiveVisible { get; set; }
+
+        
         public ICommand ProjectViewCommand { get; private set; }
         public void ExecuteProjectView(int id)
         {
@@ -115,23 +128,40 @@ namespace Proj0.MAUI.ViewModels
 
         public void Add()
         {
-            Model.stringToOpenDate(openMonth.ToString() + '/' + openDay.ToString() + '/' + openYear.ToString() + ' ' + openTime);
-            Model.stringToClosedDate(closedMonth.ToString() + '/' + closedDay.ToString() + '/' + closedYear.ToString() + ' ' + closedTime);
-            Model.Name = name;
-            Model.Notes = notes;
-            Model.IsActive = isActive;
+            AddOrEdit();
             ClientService.Current.Add(Model);
             Model = new Client();
         }
 
         public void Edit()
         {
-            Model.stringToOpenDate(openMonth.ToString() + '/' + openDay.ToString() + '/' + openYear.ToString() + ' ' + openTime);
-            Model.stringToClosedDate(closedMonth.ToString() + '/' + closedDay.ToString() + '/' + closedYear.ToString() + ' ' + closedTime);
+            AddOrEdit();
+            Model = new Client();
+        }
+
+        public void AddOrEdit()
+        {
+            DateTime temp;
+            if (DateTime.TryParse(openMonth.ToString() + '/' + openDay.ToString() + '/' + openYear.ToString() + ' ' + openTime, out temp))
+            {
+                Model.OpenDate = temp;
+            }
+            else
+            {
+                Model.OpenDate = DateTime.MinValue;
+            }
+            DateTime temp2;
+            if (DateTime.TryParse(closedMonth.ToString() + '/' + closedDay.ToString() + '/' + closedYear.ToString() + ' ' + closedTime, out temp2))
+            {
+                Model.ClosedDate = temp2;
+            }
+            else
+            {
+                Model.ClosedDate = DateTime.MinValue;
+            }
             Model.Name = name;
             Model.Notes = notes;
             Model.IsActive = isActive;
-            Model = new Client();
         }
 
         public void Active(bool isA)

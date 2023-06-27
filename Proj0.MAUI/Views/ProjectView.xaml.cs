@@ -1,4 +1,5 @@
 using Proj0.MAUI.ViewModels;
+using Summer2022Proj0.library.Models;
 
 namespace Proj0.MAUI.Views;
 [QueryProperty(nameof(ClientId), "clientId")]
@@ -13,10 +14,6 @@ public partial class ProjectView : ContentPage
     {
         Shell.Current.GoToAsync("//Clients");
     }
-    private void OnLeaving(object sender, NavigatedFromEventArgs e)
-    {
-        BindingContext = null;
-    }
 
     private void OnArriving(object sender, NavigatedToEventArgs e)
     {
@@ -30,7 +27,9 @@ public partial class ProjectView : ContentPage
 
     private void AddClicked(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync("//ProjectDetail");
+        (BindingContext as ProjectViewViewModel).RefreshClientList();
+        int ProjectId = 0;
+        Shell.Current.GoToAsync($"//ProjectDetail?projectId={ProjectId}&clientId={ClientId}");
     }
 
     private void EditClicked(object sender, EventArgs e)

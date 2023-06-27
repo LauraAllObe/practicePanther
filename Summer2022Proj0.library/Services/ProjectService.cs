@@ -54,17 +54,11 @@ namespace Summer2022Proj0.library.Services
             {
                 if (project.Id == 0)
                 {
-                    project.Id = LastId + 1;
+                    project.Id = FreeId;
                 }
                 projects.Add(project);
             }
         }
-        
-        public void Delete(int projId)
-        {
-            Delete(projId);
-        }
-        /*
         public void Delete(int id)
         {
             var enrollmentToRemove = Get(id);
@@ -73,20 +67,27 @@ namespace Summer2022Proj0.library.Services
                 projects.Remove(enrollmentToRemove);
             }
         }
-        public void Delete(Project s)
-        {
-            Delete(s.Id);
-        }
-        public List<Project> Search(string query)
-        {
-            return projects.Where(s => s.ShortName.ToUpper().Contains(query.ToUpper())).ToList();
-        }*/
 
-        private int LastId
+        private int FreeId
         {
             get
             {
-                return Projects.Any() ? Projects.Select(c => c.Id).Max() : 0;
+                bool currentExists;
+                for(int i = 1;i > 0;i++)
+                {
+                    currentExists = false;
+                    foreach (var project in projects)
+                    {
+                        if(project.Id == i)
+                        {
+                            currentExists = true;
+                            break;
+                        }
+                    }
+                    if (currentExists == false)
+                        return i;
+                }
+                return 0;
             }
         }
     }
