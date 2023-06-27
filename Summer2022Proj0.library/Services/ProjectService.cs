@@ -38,11 +38,12 @@ namespace Summer2022Proj0.library.Services
         
         private ProjectService()
         {
-            projects = new List<Project>()
+            projects = new List<Project>();
+            /*projects = new List<Project>()
             {
                 new Project{ClientId = 1, Id=1, ClosedDate=DateTime.Now, OpenDate=DateTime.Today, IsActive=true, LongName="longname1", ShortName="shortname1"},
                 new Project{ClientId = 1, Id=2, ClosedDate=DateTime.Now, OpenDate=DateTime.Today, IsActive=true, LongName="longname2", ShortName="shortname2"}
-            };
+            };*/
         }
         public Project? Get(int id)
         {

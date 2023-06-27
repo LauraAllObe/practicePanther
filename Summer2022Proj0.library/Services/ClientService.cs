@@ -30,12 +30,13 @@ namespace Summer2022Proj0.library.Services
         private List<Client> clients;
         private ClientService()
         {
-            clients = new List<Client>
+            clients = new List<Client>();
+            /*clients = new List<Client>
             {
                 new Client{Notes = "test1", Name = "Jane Doe", Id = 1, OpenDate = DateTime.MinValue, ClosedDate = DateTime.MinValue, IsActive = false},
                 new Client{Notes = "test2", Name = "Bob Smith", Id = 2, OpenDate = DateTime.Today, ClosedDate = DateTime.Today, IsActive = true},
                 new Client{Notes = "test3", Name = "Suzy Johnson", Id = 3, OpenDate = DateTime.MaxValue, ClosedDate = DateTime.MaxValue, IsActive = true}
-            };
+            };*/
 
         }
         public List<Client> Clients
