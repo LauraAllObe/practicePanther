@@ -4,8 +4,10 @@
              xmlns:vm="clr-namespace:Proj0.MAUI.ViewModels"
              x:Class="Proj0.MAUI.Views.ProjectView"
              Title="ProjectView"
-             NavigatedFrom="OnLeaving"
              NavigatedTo="OnArriving">
+    <ContentPage.BindingContext>
+        <vm:ClientViewViewModel/>
+    </ContentPage.BindingContext>
     <VerticalStackLayout>
         <Grid>
             <Grid.ColumnDefinitions>

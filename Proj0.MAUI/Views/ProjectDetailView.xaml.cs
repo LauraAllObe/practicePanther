@@ -1,12 +1,58 @@
-using Summer2022Proj0.library.Models;
+using Proj0.MAUI.ViewModels;
 
 namespace Proj0.MAUI.Views;
 [QueryProperty(nameof(ClientId), "clientId")]
+[QueryProperty(nameof(ProjectId), "projectId")]
 public partial class ProjectDetailView : ContentPage
 {
     public int ClientId { get; set; }
+    public int ProjectId { get; set; }
     public ProjectDetailView()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+        if (ClientId > 0)
+            BindingContext = new ProjectDetailViewModel(ClientId, ProjectId);
+        else
+            BindingContext = new ProjectDetailViewModel();
+    }
+
+    private void OkClicked(object sender, EventArgs e)
+    {
+        if ((!(ProjectId > 0)) && ClientId > 0)
+            (BindingContext as ProjectDetailViewModel).Add();
+        else if (ClientId > 0 && ProjectId > 0)
+            (BindingContext as ProjectDetailViewModel).Edit();
+        Shell.Current.GoToAsync($"//Projects?clientId={ClientId}");
+    }
+
+    private void CancelClicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync($"//Projects?clientId={ClientId}");
+    }
+
+    private void UndoClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ProjectDetailViewModel).Undo();
+    }
+
+    private void YesClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ProjectDetailViewModel).Active(false);
+    }
+
+    private void NoClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ProjectDetailViewModel).Active(true);
+    }
+
+    private void OnLeaving(object sender, NavigatedFromEventArgs e)
+    {
+        BindingContext = null;
+    }
+
+    private void OnArriving(object sender, NavigatedToEventArgs e)
+    {
+        BindingContext = new ProjectDetailViewModel(ClientId, ProjectId);
+    }
 }
+

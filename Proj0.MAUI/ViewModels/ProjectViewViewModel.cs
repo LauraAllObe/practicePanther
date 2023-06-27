@@ -55,5 +55,16 @@ namespace Proj0.MAUI.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void Delete()
+        {
+            if (SelectedProject != null)
+            {
+                ProjectService.Current.Delete(SelectedProject.Id);
+                SelectedProject = null;
+                NotifyPropertyChanged(nameof(Projects));
+                NotifyPropertyChanged(nameof(SelectedProject));
+            }
+        }
     }
 }

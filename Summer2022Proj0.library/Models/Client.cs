@@ -42,32 +42,6 @@ namespace Summer2022Proj0.library.Models
             }
         }
 
-        public void stringToOpenDate(String tempString)
-        {
-            DateTime temp;
-            if (DateTime.TryParse(tempString, out temp))
-            {
-                OpenDate = temp;
-            }
-            else
-            {
-                OpenDate = DateTime.MinValue;
-            }
-        }
-
-        public void stringToClosedDate(String tempString)
-        {
-            DateTime temp;
-            if (DateTime.TryParse(tempString, out temp))
-            {
-                ClosedDate = temp;
-            }
-            else
-            {
-                ClosedDate = DateTime.MinValue;
-            }
-        }
-
         private DateTime closedDate;
         public DateTime ClosedDate
         {
