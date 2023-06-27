@@ -2,6 +2,7 @@
 using Summer2022Proj0.library.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -26,7 +27,6 @@ namespace Proj0.MAUI.ViewModels
         public string notes { get; set; }
 
         public bool isActive { get; set; }
-
         public string Display
         {
             get
@@ -53,9 +53,11 @@ namespace Proj0.MAUI.ViewModels
                 IsActiveVisible = false;
 
             DeleteCommand = new Command(
-                (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));//first
+                (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));
             EditCommand = new Command(
                 (c) => ExecuteEdit((c as ClientDetailViewModel).Model.Id));
+            ProjectViewCommand = new Command(
+                (c) => ExecuteProjectView((c as ClientDetailViewModel).Model.Id));
         }
 
         public void Undo()
@@ -84,6 +86,11 @@ namespace Proj0.MAUI.ViewModels
         public void ExecuteEdit(int id)
         {
             Shell.Current.GoToAsync($"//ClientDetail?clientId={id}");
+        }
+        public ICommand ProjectViewCommand { get; private set; }
+        public void ExecuteProjectView(int id)
+        {
+            Shell.Current.GoToAsync($"//Projects?clientId={id}");
         }
 
         public ClientDetailViewModel(Client client)

@@ -9,14 +9,14 @@
     <Color x:Key="Tertiary">#EADBB2</Color>
     <Color x:Key="White">#F9F6D7</Color>
     <Color x:Key="Black">#995E2A</Color>
-    <Color x:Key="Gray100">#E1E1E1</Color>
-    <Color x:Key="Gray200">#C8C8C8</Color>
-    <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
-    <Color x:Key="Gray500">#6E6E6E</Color>
-    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray100">#E0CDC1</Color>
+    <Color x:Key="Gray200">#B3886F</Color>
+    <Color x:Key="Gray300">#8C6046</Color>
+    <Color x:Key="Gray400">#7D4829</Color>
+    <Color x:Key="Gray500">#704125</Color>
+    <Color x:Key="Gray600">#4D2C19</Color>
     <Color x:Key="Gray900">#D3C3A1</Color>
-    <Color x:Key="Gray950">#141414</Color>
+    <Color x:Key="Gray950">#704125</Color>
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>

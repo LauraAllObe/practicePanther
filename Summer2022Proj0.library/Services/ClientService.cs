@@ -30,13 +30,9 @@ namespace Summer2022Proj0.library.Services
         private List<Client> clients;
         private ClientService()
         {
-            Project p = new Project { ClientId = 1, ClosedDate = DateTime.Now, Id = 1, IsActive = false};
-            List<Project> pc = new List<Project>();
-            pc.Add(p);
-            //clients = new List<Client>();
             clients = new List<Client>
             {
-                new Client{Notes = "test1", Name = "Jane Doe", Id = 1, OpenDate = DateTime.MinValue, ClosedDate = DateTime.MinValue, IsActive = false, Projects = pc},
+                new Client{Notes = "test1", Name = "Jane Doe", Id = 1, OpenDate = DateTime.MinValue, ClosedDate = DateTime.MinValue, IsActive = false},
                 new Client{Notes = "test2", Name = "Bob Smith", Id = 2, OpenDate = DateTime.Today, ClosedDate = DateTime.Today, IsActive = true},
                 new Client{Notes = "test3", Name = "Suzy Johnson", Id = 3, OpenDate = DateTime.MaxValue, ClosedDate = DateTime.MaxValue, IsActive = true}
             };
@@ -49,7 +45,7 @@ namespace Summer2022Proj0.library.Services
                 return clients;
             }
         }
-        public Client? Get(int id)//? means returns explicit null
+        public Client? Get(int id)
         {
             return clients.FirstOrDefault(e => e.Id == id);
         }

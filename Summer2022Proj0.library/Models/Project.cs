@@ -142,7 +142,5 @@ namespace Summer2022Proj0.library.Models
                 linked = $"linked to a client {clientId}.";
             return $"{id}. Short name {shortName}, long name {longName} is {isActiveString} project open from {openDate} up until {closedDate}. This project {linked}";
         }
-
-        //public Client? Client { get; set; };
     }
 }

@@ -2,13 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Proj0.MAUI.ViewModels"
-             x:Class="Proj0.MAUI.Views.ClientView"
-             Title="ClientView"
-             NavigatedTo="OnArrived">
-    <ContentPage.BindingContext>
-        <vm:ClientViewViewModel/>
-    </ContentPage.BindingContext>
-    <!--Comment-->
+             x:Class="Proj0.MAUI.Views.ProjectView"
+             Title="ProjectView"
+             NavigatedFrom="OnLeaving"
+             NavigatedTo="OnArriving">
     <VerticalStackLayout>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -25,10 +22,9 @@
                          Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\add.png"
                          ></ImageButton>
         </Grid>
-
         <ListView 
-            ItemsSource="{Binding Path=Clients}"
-            SelectedItem="{Binding Path=SelectedClient}"
+            ItemsSource="{Binding Path=Projects}"
+            SelectedItem="{Binding Path=SelectedProject}"
             >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -38,25 +34,17 @@
                                 <ColumnDefinition Width="14*"/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0"  Text="{Binding Path=Display}" VerticalOptions="Center"/>
                             <ImageButton
                                     Grid.Column="1" 
-                                    Command="{Binding Path=ProjectViewCommand}" 
-                                    CommandParameter="{Binding}"
-                                    Clicked="ProjectClicked"
-                                    Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\project.png"
-                                />
-                            <ImageButton
-                                    Grid.Column="2" 
                                     Command="{Binding Path=EditCommand}" 
                                     CommandParameter="{Binding}"
                                     Clicked="EditClicked"
                                     Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\edit.png"
                                 />
                             <ImageButton
-                                    Grid.Column="3" 
+                                    Grid.Column="2" 
                                     Command="{Binding Path=DeleteCommand}" 
                                     CommandParameter="{Binding}"
                                     Clicked="DeleteClicked"

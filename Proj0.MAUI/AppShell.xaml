@@ -7,6 +7,15 @@
     xmlns:local2="clr-namespace:Proj0.MAUI.Views"
     Shell.FlyoutBehavior="Disabled">
 
+    <Shell.TitleView>
+        <Image Style="{StaticResource shellLogoStyle}"></Image>
+    </Shell.TitleView>
+
+    <Shell.BackgroundImageSource>
+        <FileImageSource File="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\background.png"></FileImageSource>
+    </Shell.BackgroundImageSource>
+
+
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
@@ -28,11 +37,19 @@
         ContentTemplate="{DataTemplate local2:EmployeeDetailView}"
         Route="EmployeeDetail" />
     <ShellContent
-        Title="Time Managemnet"
+        Title="Time Management"
         ContentTemplate="{DataTemplate local2:TimeView}"
         Route="Times" />
     <ShellContent
         Title="Time Details"
         ContentTemplate="{DataTemplate local2:TimeDetailView}"
         Route="TimeDetail" />
+    <ShellContent
+        Title="Project Management"
+        ContentTemplate="{DataTemplate local2:ProjectView}"
+        Route="Projects" />
+    <ShellContent
+        Title="Project Details"
+        ContentTemplate="{DataTemplate local2:ProjectDetailView}"
+        Route="ProjectDetail" />
 </Shell>
