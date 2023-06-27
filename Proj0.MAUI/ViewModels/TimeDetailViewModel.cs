@@ -99,7 +99,13 @@ namespace Proj0.MAUI.ViewModels
             Model.Narrative = narrative;
             Model.Hours = hours;
             Model.stringToDate(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time);
-            if(TimeService.Current.isValid(empId, proId))
+            bool projectExists = false;
+            foreach(var projects in ProjectService.Current.Projects)
+            {
+                if(projects.Id == proId)
+                    projectExists = true;
+            }
+            if(projectExists == true)
             {
                 Model.EmployeeId = empId;
                 Model.ProjectId = proId;
@@ -113,12 +119,18 @@ namespace Proj0.MAUI.ViewModels
             Model.Narrative = narrative;
             Model.Hours = hours;
             Model.stringToDate(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time);
-            if (TimeService.Current.isValid(empId, proId))
+            bool projectExists = false;
+            foreach (var projects in ProjectService.Current.Projects)
+            {
+                if (projects.Id == proId)
+                    projectExists = true;
+            }
+            if (projectExists == true)
             {
                 Model.EmployeeId = empId;
                 Model.ProjectId = proId;
             }
-                Model = new Time();
+            Model = new Time();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
