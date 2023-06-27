@@ -109,9 +109,11 @@ namespace Proj0.MAUI.ViewModels
         public void Undo()
         {
             SetUpCommands();
+            NotifyPropertyChanged(nameof(openTime));
             NotifyPropertyChanged(nameof(openDay));
             NotifyPropertyChanged(nameof(openMonth));
             NotifyPropertyChanged(nameof(openYear));
+            NotifyPropertyChanged(nameof(closedTime));
             NotifyPropertyChanged(nameof(closedDay));
             NotifyPropertyChanged(nameof(closedMonth));
             NotifyPropertyChanged(nameof(closedYear));
