@@ -49,12 +49,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\Compagnon-Light.otf" />
+	  <None Remove="Resources\Fonts\Compagnon-Roman.otf" />
+	  <None Remove="Resources\Fonts\Harting_plain.ttf" />
+	  <None Remove="Resources\Fonts\underwood_champion.ttf" />
 	  <None Remove="Resources\Images\add.png" />
 	  <None Remove="Resources\Images\back.png" />
+	  <None Remove="Resources\Images\background.png" />
 	  <None Remove="Resources\Images\cancel.png" />
 	  <None Remove="Resources\Images\check.png" />
 	  <None Remove="Resources\Images\delete.png" />
 	  <None Remove="Resources\Images\edit.png" />
+	  <None Remove="Resources\Images\Logo.png" />
 	  <None Remove="Resources\Images\no.png" />
 	  <None Remove="Resources\Images\project.png" />
 	  <None Remove="Resources\Images\save.png" />
@@ -91,6 +97,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\EmployeeView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProjectDetailView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProjectView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TimeDetailView.xaml">

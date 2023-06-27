@@ -9,7 +9,6 @@ public partial class ClientView : ContentPage
     public ClientView()
     {
         InitializeComponent();
-        //BindingContext = new ClientViewViewModel();
     }
     
     private void DeleteClicked(object sender, EventArgs e)
@@ -28,6 +27,11 @@ public partial class ClientView : ContentPage
     }
 
     private void EditClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ClientViewViewModel).RefreshClientList();
+    }
+
+    private void ProjectClicked(object sender, EventArgs e)
     {
         (BindingContext as ClientViewViewModel).RefreshClientList();
     }
