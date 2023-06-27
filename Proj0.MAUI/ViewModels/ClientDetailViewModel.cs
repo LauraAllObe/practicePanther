@@ -51,11 +51,13 @@ namespace Proj0.MAUI.ViewModels
             isActive = Model.IsActive;
             foreach(var project in ProjectService.Current.Projects)
             {
-                if (project.ClientId == Model.Id && project.IsActive == true && Model.Id != 0)
+                if (project.ClientId == Model.Id && project.IsActive == true)
                     IsActiveVisible = false;
                 else
                     IsActiveVisible = true;
             }
+            if (ProjectService.Current.Projects.Count == 0)
+                IsActiveVisible = true;
 
             DeleteCommand = new Command(
                 (c) => ExecuteDelete((c as ClientDetailViewModel).Model.Id));
