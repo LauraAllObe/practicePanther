@@ -17,6 +17,15 @@ namespace Proj0.MAUI.ViewModels
         public Client Client { get; set; }
         public Project SelectedProject { get; set; }
 
+        public ICommand SearchCommand { get; private set; }
+
+        public string Query { get; set; }
+
+        public void ExecuteSearchCommand()
+        {
+            NotifyPropertyChanged(nameof(Projects));
+        }
+
         public ObservableCollection<ProjectDetailViewModel> Projects
         {
             get
@@ -26,7 +35,7 @@ namespace Proj0.MAUI.ViewModels
                     return new ObservableCollection<ProjectDetailViewModel>();
                 }
                 return new ObservableCollection<ProjectDetailViewModel>(ProjectService
-                    .Current.Projects.Where(p => p.ClientId == Client.Id)
+                    .Current.Search(Query ?? string.Empty).Where(p => p.ClientId == Client.Id)
                     .Select(r => new ProjectDetailViewModel(r)));
             }
         }
@@ -41,6 +50,7 @@ namespace Proj0.MAUI.ViewModels
             {
                 Client = new Client();
             }
+            SearchCommand = new Command(ExecuteSearchCommand);
 
         }
 

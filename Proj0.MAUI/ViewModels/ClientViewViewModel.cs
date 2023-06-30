@@ -15,6 +15,19 @@ namespace Proj0.MAUI.ViewModels
     public class ClientViewViewModel : INotifyPropertyChanged
     {
         public Client SelectedClient { get; set; }
+        public ICommand SearchCommand { get; private set; }
+
+        public string Query { get; set; }
+
+        public void ExecuteSearchCommand()
+        {
+            NotifyPropertyChanged(nameof(Clients));
+        }
+
+        public ClientViewViewModel()
+        {
+            SearchCommand = new Command(ExecuteSearchCommand);
+        }
 
         public ObservableCollection<ClientDetailViewModel> Clients
         {
@@ -23,7 +36,7 @@ namespace Proj0.MAUI.ViewModels
                 return
                     new ObservableCollection<ClientDetailViewModel>
                     (ClientService
-                        .Current.Clients
+                        .Current.Search(Query ?? string.Empty)
                         .Select(c => new ClientDetailViewModel(c)).ToList());
             }
         }
@@ -50,6 +63,8 @@ namespace Proj0.MAUI.ViewModels
         {
             NotifyPropertyChanged(nameof(Clients));
         }
+
+
 
     }
 }

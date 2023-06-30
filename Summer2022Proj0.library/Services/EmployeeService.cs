@@ -91,9 +91,9 @@ namespace Summer2022Proj0.library.Services
         {
             Delete(s.Id);
         }
-        public List<Employee> Search(string query)
+        public IEnumerable<Employee> Search(string query)
         {
-            return employees.Where(s => s.Name.ToUpper().Contains(query.ToUpper())).ToList();
+            return employees.Where(s => s.Name.ToUpper().Contains(query.ToUpper()));
         }
     }
 }

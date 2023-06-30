@@ -16,6 +16,20 @@ namespace Proj0.MAUI.ViewModels
     {
         public Time SelectedTime { get; set; }
 
+        public ICommand SearchCommand { get; private set; }
+
+        public string Query { get; set; }
+
+        public void ExecuteSearchCommand()
+        {
+            NotifyPropertyChanged(nameof(Times));
+        }
+
+        public TimeViewViewModel()
+        {
+            SearchCommand = new Command(ExecuteSearchCommand);
+        }
+
         public ObservableCollection<TimeDetailViewModel> Times
         {
             get
@@ -23,7 +37,7 @@ namespace Proj0.MAUI.ViewModels
                 return
                     new ObservableCollection<TimeDetailViewModel>
                     (TimeService
-                        .Current.Times
+                        .Current.Search(Query ?? string.Empty)
                         .Select(c => new TimeDetailViewModel(c)).ToList());
             }
         }

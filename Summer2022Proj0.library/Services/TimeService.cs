@@ -90,9 +90,9 @@ namespace Summer2022Proj0.library.Services
         {
             Delete(s.Id);
         }
-        public List<Time> Search(string query)
+        public IEnumerable<Time> Search(string query)
         {
-            return times.Where(s => s.Date.ToString().ToUpper().Contains(query.ToUpper())).ToList();
+            return times.Where(s => (s.Narrative + s.ProjectId + s.EmployeeId).ToUpper().Contains(query.ToUpper()));
         }
     }
 }
