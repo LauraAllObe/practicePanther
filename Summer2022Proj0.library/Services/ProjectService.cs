@@ -91,5 +91,10 @@ namespace Summer2022Proj0.library.Services
                 return 0;
             }
         }
+
+        public IEnumerable<Project> Search(string query)
+        {
+            return projects.Where(s => (s.ShortName + s.LongName).ToUpper().Contains(query.ToUpper()));
+        }
     }
 }

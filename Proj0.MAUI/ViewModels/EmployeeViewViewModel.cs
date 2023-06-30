@@ -16,6 +16,20 @@ namespace Proj0.MAUI.ViewModels
     {
         public Employee SelectedEmployee { get; set; }
 
+        public ICommand SearchCommand { get; private set; }
+
+        public string Query { get; set; }
+
+        public void ExecuteSearchCommand()
+        {
+            NotifyPropertyChanged(nameof(Employees));
+        }
+
+        public EmployeeViewViewModel()
+        {
+            SearchCommand = new Command(ExecuteSearchCommand);
+        }
+
         public ObservableCollection<EmployeeDetailViewModel> Employees
         {
             get
@@ -23,7 +37,7 @@ namespace Proj0.MAUI.ViewModels
                 return
                     new ObservableCollection<EmployeeDetailViewModel>
                     (EmployeeService
-                        .Current.Employees
+                        .Current.Search(Query ?? string.Empty)
                         .Select(c => new EmployeeDetailViewModel(c)).ToList());
             }
         }

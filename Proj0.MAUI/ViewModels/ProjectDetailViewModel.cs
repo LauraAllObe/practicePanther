@@ -40,6 +40,7 @@ namespace Proj0.MAUI.ViewModels
             Model = new Project();
             SetUpCommands();
         }
+
         public ProjectDetailViewModel(int clientId)
         {
             Model = new Project { ClientId = clientId };
