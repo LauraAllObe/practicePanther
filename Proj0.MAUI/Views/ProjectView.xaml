@@ -33,20 +33,26 @@
                     <ViewCell>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="14*"/>
+                                <ColumnDefinition Width="13*"/>
+                                <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0"  Text="{Binding Path=Display}" VerticalOptions="Center"/>
                             <ImageButton
                                     Grid.Column="1" 
+                                    Command="{Binding Path=TimerCommand}"
+                                    Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\timer.png"
+                                />
+                            <ImageButton
+                                    Grid.Column="2" 
                                     Command="{Binding Path=EditCommand}" 
                                     CommandParameter="{Binding}"
                                     Clicked="EditClicked"
                                     Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\edit.png"
                                 />
                             <ImageButton
-                                    Grid.Column="2" 
+                                    Grid.Column="3" 
                                     Command="{Binding Path=DeleteCommand}" 
                                     CommandParameter="{Binding}"
                                     Clicked="DeleteClicked"
