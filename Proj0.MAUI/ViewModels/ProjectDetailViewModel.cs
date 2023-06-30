@@ -1,4 +1,5 @@
-﻿using Summer2022Proj0.library.Models;
+﻿using Proj0.MAUI.Views;
+using Summer2022Proj0.library.Models;
 using Summer2022Proj0.library.Services;
 using System;
 using System.Collections.Generic;
@@ -87,6 +88,18 @@ namespace Proj0.MAUI.ViewModels
             int ProjectId = project.Id;
             Shell.Current.GoToAsync($"//ProjectDetail?projectId={ProjectId}&clientId={ClientId}");
         }
+        public ICommand TimerCommand { get; private set; }
+        private void ExecuteTimer()
+        {
+            var window = new Window(new TimerView(Model.Id))
+            {
+                Width = 250,
+                Height = 250,
+                X = 0,
+                Y = 0
+            };
+            Application.Current.OpenWindow(window);
+        }
 
         public void SetUpCommands()
         {
@@ -106,6 +119,8 @@ namespace Proj0.MAUI.ViewModels
                 (c) => ExecuteDelete((c as ProjectDetailViewModel).Model));
             EditCommand = new Command(
                 (c) => ExecuteEdit((c as ProjectDetailViewModel).Model));
+            TimerCommand = new Command(
+                (c) => ExecuteTimer());
         }
         public void Undo()
         {

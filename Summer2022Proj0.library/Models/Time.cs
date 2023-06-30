@@ -27,7 +27,7 @@ namespace Summer2022Proj0.library.Models
         }
         public override string ToString()
         {
-            return $"{Id}. Time entry for Project {ProjectId} belongs to {EmployeeId}. Time Entry on {Date}. Narrative: {Narrative}";
+            return $"{Id}. {Hours.ToString("F2")} hour time entry for project {ProjectId} belongs to employee {EmployeeId}. Time entry on {Date}. Narrative: {Narrative}";
         }
 
         public void stringToDate(string tempString)
