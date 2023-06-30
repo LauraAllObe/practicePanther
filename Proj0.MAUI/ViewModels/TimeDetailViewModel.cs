@@ -105,11 +105,20 @@ namespace Proj0.MAUI.ViewModels
                 if(projects.Id == proId)
                     projectExists = true;
             }
-            if(projectExists == true)
+            bool employeeExists = false;
+            foreach (var employee in EmployeeService.Current.Employees)
+            {
+                if (employee.Id == empId)
+                    employeeExists = true;
+            }
+            if (employeeExists == true || empId == 0)
             {
                 Model.EmployeeId = empId;
-                Model.ProjectId = proId;
-                TimeService.Current.Add(Model);
+                if (projectExists == true)
+                {
+                    Model.ProjectId = proId;
+                    TimeService.Current.Add(Model);
+                }
             }
             Model = new Time();
         }
@@ -125,10 +134,17 @@ namespace Proj0.MAUI.ViewModels
                 if (projects.Id == proId)
                     projectExists = true;
             }
-            if (projectExists == true)
+            bool employeeExists = false;
+            foreach (var employee in EmployeeService.Current.Employees)
+            {
+                if (employee.Id == empId)
+                    employeeExists = true;
+            }
+            if (employeeExists == true || empId == 0)
             {
                 Model.EmployeeId = empId;
-                Model.ProjectId = proId;
+                if (projectExists == true)
+                    Model.ProjectId = proId;
             }
             Model = new Time();
         }
