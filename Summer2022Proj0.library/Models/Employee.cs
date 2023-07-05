@@ -20,7 +20,7 @@ namespace Summer2022Proj0.library.Models
         }
         public override string ToString()
         {
-            return $"{Id}. {Name} paid {Rate} an hour";
+            return $"{Id}. {Name} paid {Rate.ToString("F2")} an hour";
         }
     }
 }

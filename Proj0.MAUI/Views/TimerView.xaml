@@ -4,6 +4,22 @@
              x:Class="Proj0.MAUI.Views.TimerView"
              Title="TimerView">
     <VerticalStackLayout VerticalOptions="Center">
+        <Grid VerticalOptions="Center"
+              HorizontalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label
+                VerticalTextAlignment="Center"
+                Grid.Column="0"
+                Text="Eployee Id: "/>
+            <Picker
+                Grid.Column="1"
+                ItemsSource="{Binding EmployeeIds}"
+                SelectedItem="{Binding SelectedEmployee}"
+            />
+        </Grid>
         <Label 
             Text="{Binding ProjectDisplay}"
             VerticalOptions="Center" 
