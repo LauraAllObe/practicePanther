@@ -88,6 +88,13 @@ namespace Proj0.MAUI.ViewModels
             int ProjectId = project.Id;
             Shell.Current.GoToAsync($"//ProjectDetail?projectId={ProjectId}&clientId={ClientId}");
         }
+
+        public ICommand BillViewCommand { get; private set; }
+        public void ExecuteBillView(int id)
+        {
+            Shell.Current.GoToAsync($"//Bills?projectId={id}");
+        }
+
         public ICommand TimerCommand { get; private set; }
         private void ExecuteTimer()
         {
@@ -121,6 +128,8 @@ namespace Proj0.MAUI.ViewModels
                 (c) => ExecuteEdit((c as ProjectDetailViewModel).Model));
             TimerCommand = new Command(
                 (c) => ExecuteTimer());
+            BillViewCommand = new Command(
+                (c) => ExecuteBillView((c as ProjectDetailViewModel).Model.Id));
         }
         public void Undo()
         {

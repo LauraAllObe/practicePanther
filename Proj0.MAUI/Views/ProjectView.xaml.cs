@@ -36,5 +36,10 @@ public partial class ProjectView : ContentPage
     {
         (BindingContext as ProjectViewViewModel).RefreshClientList();
     }
+
+    private void BillClicked(object sender, EventArgs e)
+    {
+        (BindingContext as ProjectViewViewModel).RefreshClientList();
+    }
 }
 

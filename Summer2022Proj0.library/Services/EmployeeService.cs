@@ -30,14 +30,13 @@ namespace Summer2022Proj0.library.Services
         private List<Employee> employees;
         private EmployeeService()
         {
-            employees = new List<Employee>();
-            /*
+            //employees = new List<Employee>();
             employees = new List<Employee>
             {
-                new Employee{Id = 1, Name = "Henry Avery", Rate = 15},
-                new Employee{Id = 2, Name = "Jack Sparrow", Rate = 18},
-                new Employee{Id = 3, Name = "Tom Junior", Rate = 12}
-            };*/
+                new Employee{Id = 1, Name = "Henry Avery", Rate = Decimal.Parse("7.50")},
+                new Employee{Id = 2, Name = "Hiram Beaks", Rate = Decimal.Parse("12.25")},
+                new Employee{Id = 3, Name = "Jack Sparrow", Rate = 18}
+            };
 
         }
         public List<Employee> Employees

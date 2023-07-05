@@ -16,31 +16,21 @@ namespace Summer2022Proj0.library.Models
         public double Hours { get; set; }
         public int ProjectId { get; set; }
         public int EmployeeId { get; set; }
+
+        public bool Billed { get; set; }
         public Time()
         {
             Id = 0;
-            Date = DateTime.Today;
+            Date = DateTime.Now;
             Narrative = "Default Narrative";
             Hours = 0;
             EmployeeId = 0;
             ProjectId = 0;
+            Billed = false;
         }
         public override string ToString()
         {
             return $"{Id}. {Hours.ToString("F2")} hour time entry for project {ProjectId} belongs to employee {EmployeeId}. Time entry on {Date}. Narrative: {Narrative}";
-        }
-
-        public void stringToDate(string tempString)
-        {
-            DateTime temp;
-            if (DateTime.TryParse(tempString, out temp))
-            {
-                Date = temp;
-            }
-            else
-            {
-                Date = DateTime.MinValue;
-            }
         }
     }
 }

@@ -98,7 +98,16 @@ namespace Proj0.MAUI.ViewModels
         {
             Model.Narrative = narrative;
             Model.Hours = hours;
-            Model.stringToDate(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time);
+            DateTime temp;
+            if (DateTime.TryParse(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time, out temp))
+            {
+                Model.Date = temp;
+            }
+            else
+            {
+                Model.Date = DateTime.MinValue;
+            }
+
             bool projectExists = false;
             foreach(var projects in ProjectService.Current.Projects)
             {
@@ -111,7 +120,7 @@ namespace Proj0.MAUI.ViewModels
                 if (employee.Id == empId)
                     employeeExists = true;
             }
-            if (employeeExists == true || empId == 0)
+            if (employeeExists == true)
             {
                 Model.EmployeeId = empId;
                 if (projectExists == true)
@@ -125,9 +134,6 @@ namespace Proj0.MAUI.ViewModels
 
         public void Edit()
         {
-            Model.Narrative = narrative;
-            Model.Hours = hours;
-            Model.stringToDate(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time);
             bool projectExists = false;
             foreach (var projects in ProjectService.Current.Projects)
             {
@@ -140,11 +146,23 @@ namespace Proj0.MAUI.ViewModels
                 if (employee.Id == empId)
                     employeeExists = true;
             }
-            if (employeeExists == true || empId == 0)
+            if (employeeExists == true)
             {
                 Model.EmployeeId = empId;
                 if (projectExists == true)
                     Model.ProjectId = proId;
+            }
+
+            Model.Narrative = narrative;
+            Model.Hours = hours;
+            DateTime temp;
+            if (DateTime.TryParse(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time, out temp))
+            {
+                Model.Date = temp;
+            }
+            else
+            {
+                Model.Date = DateTime.MinValue;
             }
             Model = new Time();
         }
