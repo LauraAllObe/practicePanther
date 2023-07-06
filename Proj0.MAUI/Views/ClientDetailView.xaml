@@ -6,6 +6,9 @@
              NavigatedFrom="OnLeaving"
              NavigatedTo="OnArriving">
     <VerticalStackLayout>
+        <Label Text="ClientDetailView" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+               FontSize="30" TextColor="{AppThemeBinding Light={StaticResource Gray200}}"
+               Margin="15"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

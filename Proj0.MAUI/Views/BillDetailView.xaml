@@ -6,6 +6,9 @@
              NavigatedFrom="OnLeaving"
              NavigatedTo="OnArriving">
     <VerticalStackLayout>
+        <Label Text="BillDetailView" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+               FontSize="30" TextColor="{AppThemeBinding Light={StaticResource Gray200}}"
+               Margin="15"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -24,13 +27,13 @@
             <Entry Grid.Column="1"
                    Text="{Binding Path=totalAmount}"
                    IsReadOnly="True"/>
-            <Label Grid.Column="2" Text="Time" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Label Grid.Column="2" Text="Time Due" HorizontalOptions="End" VerticalOptions="Center"/>
             <Entry Grid.Column="3" Text="{Binding Path=dueTime}"/>
-            <Label Grid.Column="4" Text="Month" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Label Grid.Column="4" Text="Month Due" HorizontalOptions="End" VerticalOptions="Center"/>
             <Entry Grid.Column="5" Text="{Binding Path=dueMonth}" Keyboard="Numeric"/>
-            <Label Grid.Column="6" Text="Day" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Label Grid.Column="6" Text="Day  Due" HorizontalOptions="End" VerticalOptions="Center"/>
             <Entry Grid.Column="7" Text="{Binding Path=dueDay}" Keyboard="Numeric"/>
-            <Label Grid.Column="8" Text="Year" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Label Grid.Column="8" Text="Year Due" HorizontalOptions="End" VerticalOptions="Center"/>
             <Entry Grid.Column="9" Text="{Binding Path=dueYear}" Keyboard="Numeric"/>
         </Grid>
         

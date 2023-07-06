@@ -49,6 +49,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Resources\Images\testing\**" />
+	  <Compile Remove="Resources\Images\testing\**" />
+	  <EmbeddedResource Remove="Resources\Images\testing\**" />
+	  <MauiCss Remove="Resources\Images\testing\**" />
+	  <MauiImage Remove="Resources\Images\testing\**" />
+	  <MauiXaml Remove="Resources\Images\testing\**" />
+	  <None Remove="Resources\Images\testing\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Fonts\Compagnon-Light.otf" />
 	  <None Remove="Resources\Fonts\Compagnon-Roman.otf" />
 	  <None Remove="Resources\Fonts\Harting_plain.ttf" />
@@ -126,10 +136,6 @@
 	  <MauiXaml Update="Views\TimeView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Resources\Images\testing\" />
 	</ItemGroup>
 
 </Project>
