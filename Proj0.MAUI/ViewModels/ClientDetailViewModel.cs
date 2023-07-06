@@ -65,6 +65,8 @@ namespace Proj0.MAUI.ViewModels
                 (c) => ExecuteEdit((c as ClientDetailViewModel).Model.Id));
             ProjectViewCommand = new Command(
                 (c) => ExecuteProjectView((c as ClientDetailViewModel).Model.Id));
+            BillViewCommand = new Command(
+                (c) => ExecuteBillView((c as ClientDetailViewModel).Model));
         }
 
         public void Undo()
@@ -108,6 +110,12 @@ namespace Proj0.MAUI.ViewModels
         public void ExecuteProjectView(int id)
         {
             Shell.Current.GoToAsync($"//Projects?clientId={id}");
+        }
+
+        public ICommand BillViewCommand { get; private set; }
+        public void ExecuteBillView(Client client)
+        {
+            Shell.Current.GoToAsync($"//Bills?projectId={0}&clientId={client.Id}");
         }
 
         public ClientDetailViewModel(Client client)

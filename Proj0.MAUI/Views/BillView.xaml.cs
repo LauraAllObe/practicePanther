@@ -14,7 +14,10 @@ public partial class BillView : ContentPage
     }
     private void GoBackClicked(object sender, EventArgs e)
     {
-        Shell.Current.GoToAsync($"//Projects?clientId={ClientId}");
+        if(ProjectId == 0)
+            Shell.Current.GoToAsync($"//Clients");
+        else
+            Shell.Current.GoToAsync($"//Projects?clientId={ClientId}");
     }
 
     private void OnArriving(object sender, NavigatedToEventArgs e)
@@ -25,7 +28,7 @@ public partial class BillView : ContentPage
     private void AddClicked(object sender, EventArgs e)
     {
         (BindingContext as BillViewViewModel).RefreshClientList();
-        Shell.Current.GoToAsync($"//BillDetail?projectId={ProjectId}&clientId={ClientId}");
+        Shell.Current.GoToAsync($"//BillDetail?projectId={ProjectId}&clientId={ClientId}&billId={0}");
     }
 }
 

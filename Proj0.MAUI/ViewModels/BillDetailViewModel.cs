@@ -46,8 +46,12 @@ namespace Proj0.MAUI.ViewModels
         {
             if (projectId > 0 && clientId > 0 && billId > 0)
                 Model = BillService.Current.Get(billId);
+            else if(clientId > 0 && billId > 0)
+                Model = BillService.Current.Get(billId);
             else if (projectId > 0 && clientId > 0)
                 Model = new Bill { ClientId = clientId, ProjectId = projectId };
+            else if (clientId > 0)
+                Model = new Bill { ClientId = clientId, ProjectId = 0 };
             SetUpCommands();
         }
 
@@ -74,28 +78,24 @@ namespace Proj0.MAUI.ViewModels
         {
             if(Model != null)
             {
-                if(Model.DueDate != null)
-                {
-                    dueTime = Model.DueDate.TimeOfDay.ToString();
-                    dueDay = Model.DueDate.Day;
-                    dueMonth = Model.DueDate.Month;
-                    dueYear = Model.DueDate.Year;
-                }
-                else
-                {
-                    dueTime = DateTime.MaxValue.TimeOfDay.ToString();
-                    dueDay = DateTime.MaxValue.Day;
-                    dueMonth = DateTime.MaxValue.Month;
-                    dueYear = DateTime.MaxValue.Year;
-                }
+                dueTime = DateTime.MaxValue.TimeOfDay.ToString();
+                dueDay = DateTime.MaxValue.Day;
+                dueMonth = DateTime.MaxValue.Month;
+                dueYear = DateTime.MaxValue.Year;
                 
                 totalAmount = 0;
                 foreach (Time time in TimeService.Current.Times)
                 {
-                    if (time.ProjectId == Model.ProjectId && time.Billed == false && time.wantToBill == true)
+                    if(Model.ProjectId == 0 && time.Billed == false && time.wantToBill == true)
                     {
-                        totalAmount += ((decimal)(time.Hours) * (EmployeeService.Current.Get(time.EmployeeId).Rate));
+                        foreach(Project project in ProjectService.Current.Projects)
+                        {
+                            if (time.ProjectId == project.Id && Model.ClientId == project.ClientId)
+                                totalAmount += ((decimal)(time.Hours) * (EmployeeService.Current.Get(time.EmployeeId).Rate));
+                        }
                     }
+                    else if (time.ProjectId == Model.ProjectId && time.Billed == false && time.wantToBill == true)
+                        totalAmount += ((decimal)(time.Hours) * (EmployeeService.Current.Get(time.EmployeeId).Rate));
                 }
             }
         }
@@ -113,7 +113,10 @@ namespace Proj0.MAUI.ViewModels
             DateTime temp;
             if (DateTime.TryParse(dueMonth.ToString() + '/' + dueDay.ToString() + '/' + dueYear.ToString() + ' ' + dueTime, out temp))
             {
-                Model.DueDate = temp;
+                if(temp >= DateTime.Now)
+                    Model.DueDate = temp;
+                else
+                    Model.DueDate = DateTime.Now;
             }
             else
             {
@@ -121,10 +124,16 @@ namespace Proj0.MAUI.ViewModels
             }
             foreach (Time time in TimeService.Current.Times)
             {
-                if (time.ProjectId == Model.ProjectId && time.Billed == false && time.wantToBill == true)
+                if (Model.ProjectId == 0 && time.Billed == false && time.wantToBill == true)
                 {
-                    time.Billed = true;
+                    foreach (Project project in ProjectService.Current.Projects)
+                    {
+                        if (time.ProjectId == project.Id && Model.ClientId == project.ClientId)
+                            time.Billed = true;
+                    }
                 }
+                else if (time.ProjectId == Model.ProjectId && time.Billed == false && time.wantToBill == true)
+                    time.Billed = true;
             }
             Model.TotalAmount = totalAmount;
             if(totalAmount > 0)
