@@ -52,4 +52,12 @@
         Title="Project Details"
         ContentTemplate="{DataTemplate local2:ProjectDetailView}"
         Route="ProjectDetail" />
+    <ShellContent
+        Title="Bill Management"
+        ContentTemplate="{DataTemplate local2:BillView}"
+        Route="Bills" />
+    <ShellContent
+        Title="Bill Details"
+        ContentTemplate="{DataTemplate local2:BillDetailView}"
+        Route="BillDetail" />
 </Shell>

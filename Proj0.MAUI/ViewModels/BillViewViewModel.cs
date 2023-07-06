@@ -12,9 +12,10 @@ using System.Windows.Input;
 
 namespace Proj0.MAUI.ViewModels
 {
-    public class ProjectViewViewModel : INotifyPropertyChanged
+    public class BillViewViewModel : INotifyPropertyChanged
     {
         public Client Client { get; set; }
+        public Project Project { get; set; }
         public Project SelectedProject { get; set; }
 
         public ICommand SearchCommand { get; private set; }
@@ -23,36 +24,34 @@ namespace Proj0.MAUI.ViewModels
 
         public void ExecuteSearchCommand()
         {
-            NotifyPropertyChanged(nameof(Projects));
-        }
-        public ProjectViewViewModel()
-        {
-            SearchCommand = new Command(ExecuteSearchCommand);
+            NotifyPropertyChanged(nameof(Bills));
         }
 
-        public ObservableCollection<ProjectDetailViewModel> Projects
+        public ObservableCollection<BillDetailViewModel> Bills
         {
             get
             {
-                if (Client == null || Client.Id == 0)
+                if (Project == null || Project.Id == 0 || Client == null || Client.Id == 0)
                 {
-                    return new ObservableCollection<ProjectDetailViewModel>();
+                    return new ObservableCollection<BillDetailViewModel>();
                 }
-                return new ObservableCollection<ProjectDetailViewModel>(ProjectService
-                    .Current.Search(Query ?? string.Empty).Where(p => p.ClientId == Client.Id)
-                    .Select(r => new ProjectDetailViewModel(r)));
+                return new ObservableCollection<BillDetailViewModel>(BillService
+                    .Current.Search(Query ?? string.Empty).Where(p => ((p.ClientId == Client.Id) && (p.ProjectId == Project.Id)))
+                    .Select(r => new BillDetailViewModel(r)));
             }
         }
 
-        public ProjectViewViewModel(int clientId)
+        public BillViewViewModel(int clientId, int projectId)
         {
-            if (clientId > 0)
+            if (clientId > 0 && projectId > 0)
             {
                 Client = ClientService.Current.Get(clientId);
+                Project = ProjectService.Current.Get(projectId);
             }
             else
             {
                 Client = new Client();
+                Project = new Project();
             }
             SearchCommand = new Command(ExecuteSearchCommand);
 
@@ -60,7 +59,7 @@ namespace Proj0.MAUI.ViewModels
 
         public void RefreshClientList()
         {
-            NotifyPropertyChanged(nameof(Projects));
+            NotifyPropertyChanged(nameof(Bills));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -68,17 +67,6 @@ namespace Proj0.MAUI.ViewModels
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void Delete()
-        {
-            if (SelectedProject != null)
-            {
-                ProjectService.Current.Delete(SelectedProject.Id);
-                SelectedProject = null;
-                NotifyPropertyChanged(nameof(Projects));
-                NotifyPropertyChanged(nameof(SelectedProject));
-            }
         }
     }
 }

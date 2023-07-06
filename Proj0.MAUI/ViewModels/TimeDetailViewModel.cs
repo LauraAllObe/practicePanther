@@ -24,6 +24,11 @@ namespace Proj0.MAUI.ViewModels
         public string narrative { get; set; }
         public double hours { get; set; }
 
+        public void toBill(bool tobill)
+        {
+            Model.wantToBill = tobill;
+        }
+
         public string Display
         {
             get

@@ -46,5 +46,15 @@ public partial class TimeDetailView : ContentPage
         else
             BindingContext = new TimeDetailViewModel();
     }
+
+    private void YesClicked(object sender, EventArgs e)
+    {
+        (BindingContext as TimeDetailViewModel).toBill(true);
+    }
+
+    private void NoClicked(object sender, EventArgs e)
+    {
+        (BindingContext as TimeDetailViewModel).toBill(false);
+    }
 }
 
