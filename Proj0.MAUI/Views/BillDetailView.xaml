@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proj0.MAUI.Views.BillDetailView"
+             Title="BillDetailView"
+             NavigatedFrom="OnLeaving"
+             NavigatedTo="OnArriving">
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+            Text="Amount Due" VerticalOptions="Center"/>
+            <Entry Grid.Column="1"
+                   Text="{Binding Path=totalAmount}"
+                   IsReadOnly="True"/>
+            <Label Grid.Column="2" Text="Time" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Column="3" Text="{Binding Path=dueTime}"/>
+            <Label Grid.Column="4" Text="Month" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Column="5" Text="{Binding Path=dueMonth}" Keyboard="Numeric"/>
+            <Label Grid.Column="6" Text="Day" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Column="7" Text="{Binding Path=dueDay}" Keyboard="Numeric"/>
+            <Label Grid.Column="8" Text="Year" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Column="9" Text="{Binding Path=dueYear}" Keyboard="Numeric"/>
+        </Grid>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="CANCEL" Clicked="CancelClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\cancel.png"/>
+            <Button Grid.Column="1" Text="UNDO" Clicked="UndoClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\undo.png"/>
+            <Button Grid.Column="2" Text="SAVE" Clicked="OkClicked"
+                ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\save.png"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

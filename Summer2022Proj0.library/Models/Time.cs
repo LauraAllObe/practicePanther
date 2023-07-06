@@ -18,6 +18,7 @@ namespace Summer2022Proj0.library.Models
         public int EmployeeId { get; set; }
 
         public bool Billed { get; set; }
+        public bool wantToBill { get; set; }
         public Time()
         {
             Id = 0;
@@ -26,11 +27,20 @@ namespace Summer2022Proj0.library.Models
             Hours = 0;
             EmployeeId = 0;
             ProjectId = 0;
+            wantToBill = true;
             Billed = false;
         }
         public override string ToString()
         {
-            return $"{Id}. {Hours.ToString("F2")} hour time entry for project {ProjectId} belongs to employee {EmployeeId}. Time entry on {Date}. Narrative: {Narrative}";
+            string pt1 = $"{Id}. {Hours.ToString("F2")} hour time entry for project {ProjectId} belongs to employee {EmployeeId}. Time entry on {Date}. Narrative: {Narrative}";
+            string pt2 = "";
+            if (Billed == true)
+                pt2 = ". Billed. ";
+            else if (wantToBill == false)
+                pt2 = ". Billing disabled. ";
+            else
+                pt2 = ". Not yet Billed. ";
+            return pt1 + pt2;
         }
     }
 }

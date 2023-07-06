@@ -45,7 +45,7 @@
                                     Command="{Binding Path=BillViewCommand}" 
                                     CommandParameter="{Binding}"
                                     Clicked="BillClicked"
-                                    Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\piggybank.png"
+                                    Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\banknotes.png"
                                 />
                             <ImageButton
                                     Grid.Column="2" 
