@@ -41,14 +41,14 @@
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0"  Text="{Binding Path=Display}" VerticalOptions="Center"/>
                             <ImageButton
-                                    Grid.Column="1" 
+                                    Grid.Column="2" 
                                     Command="{Binding Path=BillViewCommand}" 
                                     CommandParameter="{Binding}"
                                     Clicked="BillClicked"
                                     Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\banknotes.png"
                                 />
                             <ImageButton
-                                    Grid.Column="2" 
+                                    Grid.Column="1" 
                                     Command="{Binding Path=TimerCommand}"
                                     Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\timer.png"
                                 />

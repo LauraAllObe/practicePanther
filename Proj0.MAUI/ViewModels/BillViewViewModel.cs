@@ -16,7 +16,7 @@ namespace Proj0.MAUI.ViewModels
     {
         public Client Client { get; set; }
         public Project Project { get; set; }
-        public Project SelectedProject { get; set; }
+        public Bill SelectedBill { get; set; }
 
         public ICommand SearchCommand { get; private set; }
 
@@ -31,6 +31,12 @@ namespace Proj0.MAUI.ViewModels
         {
             get
             {
+                if ((Project == null || Project.Id == 0) && Client != null && Client.Id > 0)
+                {
+                    return new ObservableCollection<BillDetailViewModel>(BillService
+                        .Current.Search(Query ?? string.Empty).Where(p => (p.ClientId == Client.Id))
+                        .Select(r => new BillDetailViewModel(r)));
+                }
                 if (Project == null || Project.Id == 0 || Client == null || Client.Id == 0)
                 {
                     return new ObservableCollection<BillDetailViewModel>();
@@ -47,6 +53,11 @@ namespace Proj0.MAUI.ViewModels
             {
                 Client = ClientService.Current.Get(clientId);
                 Project = ProjectService.Current.Get(projectId);
+            }
+            else if(clientId > 0)
+            {
+                Client = ClientService.Current.Get(clientId);
+                Project = new Project();
             }
             else
             {

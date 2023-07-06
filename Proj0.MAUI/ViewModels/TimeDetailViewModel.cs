@@ -106,7 +106,10 @@ namespace Proj0.MAUI.ViewModels
             DateTime temp;
             if (DateTime.TryParse(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time, out temp))
             {
-                Model.Date = temp;
+                if (temp > DateTime.Now)
+                    Model.Date = DateTime.Now;
+                else
+                    Model.Date = temp;
             }
             else
             {
@@ -163,7 +166,10 @@ namespace Proj0.MAUI.ViewModels
             DateTime temp;
             if (DateTime.TryParse(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time, out temp))
             {
-                Model.Date = temp;
+                if (temp > DateTime.Now)
+                    Model.Date = DateTime.Now;
+                else
+                    Model.Date = temp;
             }
             else
             {

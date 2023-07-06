@@ -100,7 +100,10 @@ namespace Summer2022Proj0.library.Models
 
         public override string ToString()
         {
-            return $"{id}. Client {clientId}'s bill for project {projectId} of {totalAmount}$ is due on {dueDate}.";
+            string projects = $"project {projectId}";
+            if (projectId == 0)
+                projects = $"one or more projects";
+            return $"{id}. Client {clientId}'s bill for {projects} of {totalAmount}$ is due on {dueDate}.";
         }
     }
 }
