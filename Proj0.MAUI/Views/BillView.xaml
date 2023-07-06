@@ -12,14 +12,18 @@
     <VerticalStackLayout>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="11*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <c:SearchBarControl Grid.Column="0" 
+            <Label Text="BillView" HorizontalTextAlignment="Center" Grid.Column="0" 
+                   VerticalTextAlignment="Center"
+                   FontSize="30" TextColor="{AppThemeBinding Light={StaticResource Gray200}}"/>
+            <c:SearchBarControl Grid.Column="1" 
                                 QueryText="{Binding Query}"
                                 SearchButtonSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\search.png"
                                 SearchCommand="{Binding SearchCommand}"/>
-            <ImageButton Grid.Column="1" 
+            <ImageButton Grid.Column="2" 
                          Clicked="AddClicked"
                          Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\add.png">
             </ImageButton>
@@ -36,6 +40,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Label Text="{Binding Path=GrossTotal}" HorizontalOptions="Center"/>
         <Button Text="Go Back" Clicked="GoBackClicked"
                 ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\back.png"/>
     </VerticalStackLayout>

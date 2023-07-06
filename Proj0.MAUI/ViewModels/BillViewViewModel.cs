@@ -17,6 +17,35 @@ namespace Proj0.MAUI.ViewModels
         public Client Client { get; set; }
         public Project Project { get; set; }
         public Bill SelectedBill { get; set; }
+        public string GrossTotal
+        {
+            get
+            {
+                if (Client.Id > 0)
+                {
+                    decimal grossTotal = 0;
+                    if (Project.Id > 0)
+                    {
+                        foreach (Bill bill in BillService.Current.Bills)
+                        {
+                            if (bill.ClientId == Client.Id && bill.ProjectId == Project.Id)
+                                grossTotal += bill.TotalAmount;
+                        }
+                        return $"Total Bills for Project {Project.Id} of Client {Client.Id}:$" + grossTotal.ToString("F2");
+                    }
+                    else
+                    {
+                        foreach (Bill bill in BillService.Current.Bills)
+                        {
+                            if (bill.ClientId == Client.Id)
+                                grossTotal += bill.TotalAmount;
+                        }
+                        return $"Total Bills for Client {Client.Id}:$" + grossTotal.ToString("F2");
+                    }
+                }
+                return string.Empty;
+            }
+        }
 
         public ICommand SearchCommand { get; private set; }
 
