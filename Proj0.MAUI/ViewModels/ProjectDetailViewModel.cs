@@ -102,11 +102,13 @@ namespace Proj0.MAUI.ViewModels
         {
             var window = new Window(new TimerView(Model.Id))
             {
-                Width = 250,
-                Height = 250,
+                Width = 280,
+                Height = 320,
                 X = 0,
                 Y = 0
             };
+            var view = new TimerView(Model.Id, window);
+            window.Page = view;
             Application.Current.OpenWindow(window);
         }
 

@@ -32,5 +32,6 @@
             HorizontalTextAlignment="Center"/>
         <Button Text="Start" ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\start.png" Command="{Binding StartCommand}"/>
         <Button Text="Stop" ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\stop.png" Command="{Binding StopCommand}"/>
+        <Button Text="Submit" ImageSource="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\save.png" Command="{Binding SubmitCommand}"/>
     </VerticalStackLayout>
 </ContentPage>
