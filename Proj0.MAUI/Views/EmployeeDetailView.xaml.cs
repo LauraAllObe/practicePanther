@@ -17,9 +17,9 @@ public partial class EmployeeDetailView : ContentPage
     private void OkClicked(object sender, EventArgs e)
     {
         if (!(EmployeeId > 0))
-            (BindingContext as EmployeeDetailViewModel).Add();
+            (BindingContext as EmployeeDetailViewModel).AddOrEdit();
         else
-            (BindingContext as EmployeeDetailViewModel).Edit();
+            (BindingContext as EmployeeDetailViewModel).AddOrEdit();
         Shell.Current.GoToAsync("//Employees");
     }
 

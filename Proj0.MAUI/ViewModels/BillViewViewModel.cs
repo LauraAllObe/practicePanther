@@ -63,7 +63,7 @@ namespace Proj0.MAUI.ViewModels
                 if ((Project == null || Project.Id == 0) && Client != null && Client.Id > 0)
                 {
                     return new ObservableCollection<BillDetailViewModel>(BillService
-                        .Current.Search(Query ?? string.Empty).Where(p => (p.ClientId == Client.Id))
+                        .Current.Search(Query ?? string.Empty).Where(b => (b.ClientId == Client.Id))
                         .Select(r => new BillDetailViewModel(r)));
                 }
                 if (Project == null || Project.Id == 0 || Client == null || Client.Id == 0)
@@ -71,7 +71,7 @@ namespace Proj0.MAUI.ViewModels
                     return new ObservableCollection<BillDetailViewModel>();
                 }
                 return new ObservableCollection<BillDetailViewModel>(BillService
-                    .Current.Search(Query ?? string.Empty).Where(p => ((p.ClientId == Client.Id) && (p.ProjectId == Project.Id)))
+                    .Current.Search(Query ?? string.Empty).Where(b => ((b.ClientId == Client.Id) && (b.ProjectId == Project.Id)))
                     .Select(r => new BillDetailViewModel(r)));
             }
         }

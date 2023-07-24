@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using Summer2022Proj0.library.DTO;
 using Summer2022Proj0.library.Models;
+using Summer2022Proj0.Library.Utilities;
 
 namespace Summer2022Proj0.library.Services
 {
@@ -27,72 +31,91 @@ namespace Summer2022Proj0.library.Services
                 return instance;
             }
         }
-        private List<Employee> employees;
         private EmployeeService()
         {
-            //employees = new List<Employee>();
+            var response = new WebRequestHandler()
+                    .Get("/Employee")
+                    .Result;
+            employees = JsonConvert
+                .DeserializeObject<List<EmployeeDTO>>(response) 
+                ?? new List<EmployeeDTO>();
+            /*
             employees = new List<Employee>
             {
                 new Employee{Id = 1, Name = "Henry Avery", Rate = Decimal.Parse("7.50")},
                 new Employee{Id = 2, Name = "Hiram Beaks", Rate = Decimal.Parse("12.25")},
                 new Employee{Id = 3, Name = "Jack Sparrow", Rate = 18}
-            };
+            };*/
 
         }
-        public List<Employee> Employees
+        private List<EmployeeDTO> employees;
+        public List<EmployeeDTO> Employees
         {
             get
             {
-                return employees;
+                return employees ?? new List<EmployeeDTO>();
             }
         }
-        public Employee? Get(int id)//? means returns explicit null
+        public EmployeeDTO? Get(int id)
         {
-            return employees.FirstOrDefault(e => e.Id == id);
+            /*var response = new WebRequestHandler()
+                .Get("/Client/GetClients/{id}")
+                .Result;
+            var employee = JsonConvert.DeserializeObject<Employee>(response);
+            return employee;*/
+            return Employees.FirstOrDefault(e =>  e.Id == id);
         }
-        public void Add(Employee? employee)
+        public void AddOrEdit(EmployeeDTO e)
         {
-            bool employeeExists = false;
-            int validId = 0;
-            for (int i = 1; i > 0; i++)
+            var response 
+                = new WebRequestHandler().Post("/Employee", e).Result;
+            //MISSING CODE
+            var myEditedEmployee = JsonConvert.DeserializeObject<EmployeeDTO>(response);
+            if(myEditedEmployee != null)
             {
-                foreach (Employee? each in employees)
+                var existingEmployee = employees.FirstOrDefault(e => e.Id == myEditedEmployee.Id);
+                if (existingEmployee == null)
                 {
-                    if (i == each.Id)
-                    {
-                        employeeExists = true;
-                        break;
-                    }
+                    employees.Add(myEditedEmployee);
                 }
-                if (employeeExists == false)
+                else
                 {
-                    validId = i;
-                    break;
+                    var index = employees.IndexOf(existingEmployee);
+                    employees.Remove(existingEmployee);
+                    employees.Insert(index, myEditedEmployee);
                 }
-                employeeExists = false;
-            }
-            if (validId != 0 && employee != null)
-                employee.Id = validId;
-            if (employee != null)
-            {
-                employees.Add(employee);
             }
         }
         public void Delete(int id)
         {
+            /*
             var employeeToRemove = Get(id);
             if (employeeToRemove != null)
             {
                 employees.Remove(employeeToRemove);
+            }*/
+
+            /*
+             var response = new WebRequestHandler()
+                .Get("/Client/GetClients/{id}")
+                .Result;
+            var employee = JsonConvert.DeserializeObject<Employee>(response);
+            return employee;
+             */
+            //MISSING CODE
+            var employeeToDelete = Employees.FirstOrDefault(e => e.Id == id);
+            if(employeeToDelete != null)
+            {
+                var response
+                = new WebRequestHandler().Delete($"/Employee/Delete/{id}").Result;
+                Employees.Remove(employeeToDelete);
             }
         }
-        public void Delete(Employee s)
+        public IEnumerable<EmployeeDTO> Search(string query)
         {
-            Delete(s.Id);
-        }
-        public IEnumerable<Employee> Search(string query)
-        {
-            return employees.Where(s => s.Name.ToUpper().Contains(query.ToUpper()));
+            return Employees
+                .Where(s => s.Name.ToUpper()
+                .Contains(query.ToUpper()));
         }
     }
 }

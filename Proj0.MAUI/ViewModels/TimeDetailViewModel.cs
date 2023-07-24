@@ -40,6 +40,8 @@ namespace Proj0.MAUI.ViewModels
         public ICommand DeleteCommand { get; private set; }
         public void ExecuteDelete(int id)
         {
+            //ADD ARRAY OF INTEGERS ON BILL, USE TO FILTER THROUGH WHICH TO DELETE
+            //ADD INTEGERS ON CREATION OF A BILL
             TimeService.Current.Delete(id);
         }
 

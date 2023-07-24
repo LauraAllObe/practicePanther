@@ -1,5 +1,6 @@
 ﻿using Summer2022Proj0.library.Models;
 using Summer2022Proj0.library.Services;
+using Summer2022Proj0.library.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,7 @@ namespace Proj0.MAUI.ViewModels
 {
     public class EmployeeDetailViewModel : INotifyPropertyChanged
     {
-        public Employee Model { get; set; }
+        public EmployeeDTO Model { get; set; }
         public string name { get; set; }
         public decimal rate { get; set; }
         public string Display
@@ -55,7 +56,7 @@ namespace Proj0.MAUI.ViewModels
             NotifyPropertyChanged(nameof(rate));
         }
 
-        public EmployeeDetailViewModel(Employee employee)
+        public EmployeeDetailViewModel(EmployeeDTO employee)
         {
             Model = employee;
             SetupCommands();
@@ -63,29 +64,25 @@ namespace Proj0.MAUI.ViewModels
 
         public EmployeeDetailViewModel(int id)
         {
-            Model = EmployeeService.Current.Get(id);
+            if (id > 0)
+                Model = EmployeeService.Current.Get(id);
+            else
+                Model = new EmployeeDTO();
             SetupCommands();
         }
 
         public EmployeeDetailViewModel()
         {
-            Model = new Employee();
+            Model = new EmployeeDTO();
             SetupCommands();
         }
 
-        public void Add()
+        public void AddOrEdit()
         {
             Model.Rate = rate;
             Model.Name = name;
-            EmployeeService.Current.Add(Model);
-            Model = new Employee();
-        }
-
-        public void Edit()
-        {
-            Model.Rate = rate;
-            Model.Name = name;
-            Model = new Employee();
+            EmployeeService.Current.AddOrEdit(Model);
+            Model = new EmployeeDTO();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

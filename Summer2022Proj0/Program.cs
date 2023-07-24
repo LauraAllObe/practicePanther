@@ -10,11 +10,12 @@ namespace Summer2022Proj0.Models // Note: actual namespace depends on the projec
     {
         static void Main(string[] args)
         {
-            var clients = new List<Client>();
-            var projects = new List<Project>();
-            Menu(clients, projects);
+            
+            //var clients = new List<Client>();
+            //var projects = new List<Project>();
+            //Menu(clients, projects);
         }
-
+        /*
         //05.26 added for notes
         static void ProjectsMenu(List<Project> courses)
         {
@@ -284,6 +285,6 @@ namespace Summer2022Proj0.Models // Note: actual namespace depends on the projec
                 }
                 Console.WriteLine("");
             } while (!(CRUDChoice.Equals("e", StringComparison.InvariantCultureIgnoreCase)));
-        }
+        }*/
     }
 }
