@@ -42,7 +42,7 @@ namespace Summer2022Proj0.API.Controllers
             return new EmployeeEC().AddOrEdit(employee);
         }
 
-        [HttpPost]
+        [HttpPost("Search")]
         public IEnumerable<EmployeeDTO> Search([FromBody]QueryMessage query)
         {
             return new EmployeeEC().Search(query.Query);

@@ -95,9 +95,19 @@ namespace Summer2022Proj0.library.Services
                 employees.Remove(employeeToRemove);
             }*/
 
+            /*
+             var response = new WebRequestHandler()
+                .Get("/Client/GetClients/{id}")
+                .Result;
+            var employee = JsonConvert.DeserializeObject<Employee>(response);
+            return employee;
+             */
+            //MISSING CODE
             var employeeToDelete = Employees.FirstOrDefault(e => e.Id == id);
             if(employeeToDelete != null)
             {
+                var response
+                = new WebRequestHandler().Delete($"/Employee/Delete/{id}").Result;
                 Employees.Remove(employeeToDelete);
             }
         }
