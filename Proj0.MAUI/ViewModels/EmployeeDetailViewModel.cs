@@ -28,7 +28,31 @@ namespace Proj0.MAUI.ViewModels
         public ICommand DeleteCommand { get; private set; }
         public void ExecuteDelete(int id)
         {
+            bool end = false;
             EmployeeService.Current.Delete(id);
+            while(true)
+            {
+                foreach (Time time in TimeService.Current.Times)
+                {
+                    if (time.EmployeeId == id)
+                    {
+                        TimeService.Current.Delete(time.Id);
+                        if (time.BillId >= 0)
+                            BillService.Current.Delete(time.BillId);
+                        end = false;
+                        break;
+
+                    }
+                    if(TimeService.Current.Times.Last() == time)
+                    {
+                        end = true;
+                    }
+                }
+                if (TimeService.Current.Times.Count <= 0)
+                    end = true;
+                if (end == true)
+                    break;
+            }
         }
 
         public bool IsActiveVisible { get; set; }

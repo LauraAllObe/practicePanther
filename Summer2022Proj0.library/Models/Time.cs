@@ -19,6 +19,7 @@ namespace Summer2022Proj0.library.Models
 
         public bool Billed { get; set; }
         public bool wantToBill { get; set; }
+        public int BillId { get; set; }
         public Time()
         {
             Id = 0;
@@ -29,6 +30,7 @@ namespace Summer2022Proj0.library.Models
             ProjectId = 0;
             wantToBill = true;
             Billed = false;
+            BillId = 0;
         }
         public override string ToString()
         {

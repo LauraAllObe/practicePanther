@@ -42,6 +42,14 @@ namespace Proj0.MAUI.ViewModels
         {
             //ADD ARRAY OF INTEGERS ON BILL, USE TO FILTER THROUGH WHICH TO DELETE
             //ADD INTEGERS ON CREATION OF A BILL
+            BillService.Current.Delete(TimeService.Current.Get(id).BillId);
+            foreach(Time times in TimeService.Current.Times)
+            {
+                if(TimeService.Current.Get(id).BillId == times.BillId)
+                {
+                    times.Billed = false;
+                }
+            }
             TimeService.Current.Delete(id);
         }
 
@@ -136,6 +144,7 @@ namespace Proj0.MAUI.ViewModels
                 if (projectExists == true)
                 {
                     Model.ProjectId = proId;
+                    Model.BillId = -1;
                     TimeService.Current.Add(Model);
                 }
             }

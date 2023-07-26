@@ -122,6 +122,9 @@ namespace Proj0.MAUI.ViewModels
             {
                 Model.DueDate = DateTime.MinValue;
             }
+            Model.TotalAmount = totalAmount;
+            if (totalAmount > 0)
+                BillService.Current.Add(Model);
             foreach (Time time in TimeService.Current.Times)
             {
                 if (Model.ProjectId == 0 && time.Billed == false && time.wantToBill == true)
@@ -129,15 +132,19 @@ namespace Proj0.MAUI.ViewModels
                     foreach (Project project in ProjectService.Current.Projects)
                     {
                         if (time.ProjectId == project.Id && Model.ClientId == project.ClientId)
+                        {
                             time.Billed = true;
+                            time.BillId = Model.Id;
+                        }
                     }
                 }
                 else if (time.ProjectId == Model.ProjectId && time.Billed == false && time.wantToBill == true)
+                {
                     time.Billed = true;
+                    time.BillId = Model.Id;
+                }
             }
-            Model.TotalAmount = totalAmount;
-            if(totalAmount > 0)
-                BillService.Current.Add(Model);
+           
             Model = new Bill();
         }
     }
