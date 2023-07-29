@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Summer2022Proj0.library.DTO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -114,7 +115,15 @@ namespace Summer2022Proj0.library.Models
             openDate = DateTime.MinValue;
             closedDate = DateTime.MinValue;
             isActive = true;
-            Projects = new List<Project>();
+        }
+        public Client(ClientDTO dto)
+        {
+            this.Notes = dto.Notes;
+            this.Name = dto.Name;
+            this.Id = dto.Id;
+            this.OpenDate = dto.OpenDate;
+            this.ClosedDate = dto.ClosedDate;
+            this.IsActive = dto.IsActive;
         }
 
         public override string ToString()
@@ -125,7 +134,5 @@ namespace Summer2022Proj0.library.Models
 
             return $"{id}. {name} is {isActiveString} client open from {openDate} up until {closedDate}. Notes: {notes}";
         }
-
-        public List<Project> Projects{ get; set; }
     }
 }

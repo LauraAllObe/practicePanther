@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using Summer2022Proj0.library.DTO;
 using Summer2022Proj0.library.Models;
+using Summer2022Proj0.Library.Utilities;
 
 namespace Summer2022Proj0.library.Services
 {
@@ -27,10 +31,14 @@ namespace Summer2022Proj0.library.Services
                 return instance;
             }
         }
-        private List<Client> clients;
         private ClientService()
         {
-            clients = new List<Client>();
+            var response = new WebRequestHandler()
+                    .Get("/Client")
+                    .Result;
+            clients = JsonConvert
+                .DeserializeObject<List<ClientDTO>>(response)
+                ?? new List<ClientDTO>();
             /*clients = new List<Client>
             {
                 new Client{Notes = "test1", Name = "Jane Doe", Id = 1, OpenDate = DateTime.MinValue, ClosedDate = DateTime.MinValue, IsActive = false},
@@ -39,60 +47,54 @@ namespace Summer2022Proj0.library.Services
             };*/
 
         }
-        public List<Client> Clients
+        private List<ClientDTO> clients;
+        public List<ClientDTO> Clients
         {
             get
             {
-                return clients;
+                return clients ?? new List<ClientDTO>();
             }
         }
-        public Client? Get(int id)
+        public ClientDTO? Get(int id)
         {
-            return clients.FirstOrDefault(e => e.Id == id);
+            return Clients.FirstOrDefault(c => c.Id == id);
         }
-        public void Add(Client? client)
+        public void AddOrEdit(ClientDTO c)
         {
-            bool clientExists = false;
-            int validId = 0;
-            for (int i = 1; i > 0; i++)
+            var response
+                = new WebRequestHandler().Post("/Client", c).Result;
+            //MISSING CODE
+            var myEditedClient = JsonConvert.DeserializeObject<ClientDTO>(response);
+            if (myEditedClient != null)
             {
-                foreach(Client? each in clients)
+                var existingClient = clients.FirstOrDefault(c => c.Id == myEditedClient.Id);
+                if (existingClient == null)
                 {
-                    if (i == each.Id)
-                    {
-                        clientExists = true;
-                        break;
-                    }
+                    clients.Add(myEditedClient);
                 }
-                if (clientExists == false)
+                else
                 {
-                    validId = i;
-                    break;
+                    var index = clients.IndexOf(existingClient);
+                    clients.Remove(existingClient);
+                    clients.Insert(index, myEditedClient);
                 }
-                clientExists = false;
-            }
-            if(validId != 0 && client != null)
-                client.Id = validId;
-            if (client != null)
-            {
-                clients.Add(client);
             }
         }
         public void Delete(int id)
         {
-            var enrollmentToRemove = Get(id);
-            if (enrollmentToRemove != null)
+            var clientToDelete = Clients.FirstOrDefault(c => c.Id == id);
+            if (clientToDelete != null)
             {
-                clients.Remove(enrollmentToRemove);
+                var response
+                = new WebRequestHandler().Delete($"/Client/Delete/{id}").Result;
+                Clients.Remove(clientToDelete);
             }
         }
-        public void Delete(Client s)
+        public IEnumerable<ClientDTO> Search(string query)
         {
-            Delete(s.Id);
-        }
-        public IEnumerable<Client> Search(string query)
-        {
-            return clients.Where(s => s.Name.ToUpper().Contains(query.ToUpper())); //toList()
+            return Clients
+                .Where(c => c.Name.ToUpper()
+                .Contains(query.ToUpper()));
         }
     }
 }

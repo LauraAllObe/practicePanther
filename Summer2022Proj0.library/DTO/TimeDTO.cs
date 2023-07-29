@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Xml.Linq;
-using Summer2022Proj0.library.DTO;
+using Summer2022Proj0.library.Models;
 
-namespace Summer2022Proj0.library.Models
+namespace Summer2022Proj0.library.DTO
 {
-    public class Time
+    public class TimeDTO
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
@@ -21,7 +19,7 @@ namespace Summer2022Proj0.library.Models
         public bool Billed { get; set; }
         public bool wantToBill { get; set; }
         public int BillId { get; set; }
-        public Time()
+        public TimeDTO()
         {
             Id = 0;
             Date = DateTime.Now;
@@ -33,18 +31,17 @@ namespace Summer2022Proj0.library.Models
             Billed = false;
             BillId = 0;
         }
-
-        public Time(TimeDTO dto)
+        public TimeDTO(Time time)
         {
-            this.Id = dto.Id;
-            this.Date = dto.Date;
-            this.Narrative = dto.Narrative;
-            this.Hours = dto.Hours;
-            this.EmployeeId = dto.EmployeeId;
-            this.ProjectId = dto.ProjectId;
-            this.wantToBill = dto.wantToBill;
-            this.Billed = dto.Billed;
-            this.BillId = dto.BillId;
+            this.Id = time.Id;
+            this.Date = time.Date;
+            this.Narrative = time.Narrative;
+            this.Hours = time.Hours;
+            this.EmployeeId = time.EmployeeId;
+            this.ProjectId = time.ProjectId;
+            this.wantToBill = time.wantToBill;
+            this.Billed = time.Billed;
+            this.BillId = time.BillId;
         }
         public override string ToString()
         {

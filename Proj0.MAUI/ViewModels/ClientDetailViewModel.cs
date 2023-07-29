@@ -1,4 +1,5 @@
-﻿using Summer2022Proj0.library.Models;
+﻿using Summer2022Proj0.library.DTO;
+using Summer2022Proj0.library.Models;
 using Summer2022Proj0.library.Services;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Proj0.MAUI.ViewModels
 {
     public class ClientDetailViewModel : INotifyPropertyChanged
     {
-        public Client Model { get; set; }
+        public ClientDTO Model { get; set; }
         public string openTime { get; set; }
         public int openMonth { get; set; }
         public int openYear { get; set; }
@@ -91,14 +92,14 @@ namespace Proj0.MAUI.ViewModels
             bool end0 = false;
             while(true)
             {
-                foreach (Project project in ProjectService.Current.Projects)
+                foreach (ProjectDTO project in ProjectService.Current.Projects)
                 {
                     if (project.ClientId == id)
                     {
                         bool end = false;
                         while (true)
                         {
-                            foreach (Time time in TimeService.Current.Times)
+                            foreach (TimeDTO time in TimeService.Current.Times)
                             {
                                 if (time.ProjectId == project.Id)
                                 {
@@ -154,12 +155,12 @@ namespace Proj0.MAUI.ViewModels
         }
 
         public ICommand BillViewCommand { get; private set; }
-        public void ExecuteBillView(Client client)
+        public void ExecuteBillView(ClientDTO client)
         {
             Shell.Current.GoToAsync($"//Bills?projectId={0}&clientId={client.Id}");
         }
 
-        public ClientDetailViewModel(Client client)
+        public ClientDetailViewModel(ClientDTO client)
         {
             Model = client;
             SetUpCommands();
@@ -169,27 +170,14 @@ namespace Proj0.MAUI.ViewModels
         {
             Model = ClientService.Current.Get(id);
             if (Model == null)
-                Model = new Client();
+                Model = new ClientDTO();
             SetUpCommands();
         }
 
         public ClientDetailViewModel()
         {
-            Model = new Client();
+            Model = new ClientDTO();
             SetUpCommands();
-        }
-
-        public void Add()
-        {
-            AddOrEdit();
-            ClientService.Current.Add(Model);
-            Model = new Client();
-        }
-
-        public void Edit()
-        {
-            AddOrEdit();
-            Model = new Client();
         }
 
         public void AddOrEdit()
@@ -215,6 +203,8 @@ namespace Proj0.MAUI.ViewModels
             Model.Name = name;
             Model.Notes = notes;
             Model.IsActive = isActive;
+            ClientService.Current.AddOrEdit(Model);
+            Model = new ClientDTO();
         }
 
         public void Active(bool isA)

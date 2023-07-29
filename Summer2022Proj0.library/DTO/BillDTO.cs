@@ -1,14 +1,13 @@
-﻿using Summer2022Proj0.library.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using Summer2022Proj0.library.Models;
 
-namespace Summer2022Proj0.library.Models
+namespace Summer2022Proj0.library.DTO
 {
-    public class Bill
+    public class BillDTO
     {
         private int id;
         public int Id
@@ -90,21 +89,21 @@ namespace Summer2022Proj0.library.Models
             }
         }
 
-        public Bill()
+        public BillDTO()
         {
             id = 0;
             DueDate = DateTime.MaxValue;
             clientId = 0;
-            projectId= 0;
+            projectId = 0;
             totalAmount = 0;
         }
-        public Bill(BillDTO dto)
+        public BillDTO(Bill bill)
         {
-            this.Id = dto.Id;
-            this.DueDate = dto.DueDate;
-            this.ClientId = dto.ClientId;
-            this.ProjectId = dto.ProjectId;
-            this.TotalAmount = dto.TotalAmount;
+            this.Id = bill.Id;
+            this.DueDate = bill.DueDate;
+            this.ClientId = bill.ClientId;
+            this.ProjectId = bill.ProjectId;
+            this.TotalAmount = bill.TotalAmount;
         }
 
         public override string ToString()

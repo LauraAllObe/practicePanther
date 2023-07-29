@@ -1,24 +1,20 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using Summer2022Proj0.library.DTO;
 using Summer2022Proj0.library.Models;
+using Summer2022Proj0.Library.Utilities;
 
 namespace Summer2022Proj0.library.Services
 {
     public class ProjectService
     {
-        private List<Project> projects;
-        public List<Project> Projects
-        {
-            get
-            {
-                return projects;
-            }
-        }
         private static ProjectService? instance;
         private static object _lock = new object();
         public static ProjectService Current
@@ -35,66 +31,63 @@ namespace Summer2022Proj0.library.Services
                 return instance;
             }
         }
-        
         private ProjectService()
         {
-            projects = new List<Project>();
-            /*projects = new List<Project>()
-            {
-                new Project{ClientId = 1, Id=1, ClosedDate=DateTime.Now, OpenDate=DateTime.Today, IsActive=true, LongName="longname1", ShortName="shortname1"},
-                new Project{ClientId = 1, Id=2, ClosedDate=DateTime.Now, OpenDate=DateTime.Today, IsActive=true, LongName="longname2", ShortName="shortname2"}
-            };*/
+            var response = new WebRequestHandler()
+                    .Get("/Project")
+                    .Result;
+            projects = JsonConvert
+                .DeserializeObject<List<ProjectDTO>>(response)
+                ?? new List<ProjectDTO>();
         }
-        public Project? Get(int id)
+        private List<ProjectDTO> projects;
+        public List<ProjectDTO> Projects
+        {
+            get
+            {
+                return projects ?? new List<ProjectDTO>();
+            }
+        }
+        public ProjectDTO? Get(int id)
         {
             return Projects.FirstOrDefault(p => p.Id == id);
         }
-        public void Add(Project? project)
+        public void AddOrEdit(ProjectDTO p)
         {
-            if (project != null)
+            var response
+                = new WebRequestHandler().Post("/Project", p).Result;
+            //MISSING CODE
+            var myEditedProject = JsonConvert.DeserializeObject<ProjectDTO>(response);
+            if (myEditedProject != null)
             {
-                if (project.Id == 0)
+                var existingProject = projects.FirstOrDefault(p => p.Id == myEditedProject.Id);
+                if (existingProject == null)
                 {
-                    project.Id = FreeId;
+                    projects.Add(myEditedProject);
                 }
-                projects.Add(project);
+                else
+                {
+                    var index = projects.IndexOf(existingProject);
+                    projects.Remove(existingProject);
+                    projects.Insert(index, myEditedProject);
+                }
             }
         }
         public void Delete(int id)
         {
-            var enrollmentToRemove = Get(id);
-            if (enrollmentToRemove != null)
+            var projectToDelete = Projects.FirstOrDefault(p => p.Id == id);
+            if (projectToDelete != null)
             {
-                projects.Remove(enrollmentToRemove);
+                var response
+                = new WebRequestHandler().Delete($"/Project/Delete/{id}").Result;
+                Projects.Remove(projectToDelete);
             }
         }
-
-        private int FreeId
+        public IEnumerable<ProjectDTO> Search(string query)
         {
-            get
-            {
-                bool currentExists;
-                for(int i = 1;i > 0;i++)
-                {
-                    currentExists = false;
-                    foreach (var project in projects)
-                    {
-                        if(project.Id == i)
-                        {
-                            currentExists = true;
-                            break;
-                        }
-                    }
-                    if (currentExists == false)
-                        return i;
-                }
-                return 0;
-            }
-        }
-
-        public IEnumerable<Project> Search(string query)
-        {
-            return projects.Where(s => (s.ShortName + s.LongName).ToUpper().Contains(query.ToUpper()));
+            return Projects
+                .Where(p => (p.ShortName + p.LongName).ToUpper()
+                .Contains(query.ToUpper()));
         }
     }
 }

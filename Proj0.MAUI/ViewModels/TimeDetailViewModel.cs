@@ -1,4 +1,5 @@
-﻿using Summer2022Proj0.library.Models;
+﻿using Summer2022Proj0.library.DTO;
+using Summer2022Proj0.library.Models;
 using Summer2022Proj0.library.Services;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Proj0.MAUI.ViewModels
 {
     public class TimeDetailViewModel : INotifyPropertyChanged
     {
-        public Time Model { get; set; }
+        public TimeDTO Model { get; set; }
         public string Time { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
@@ -43,7 +44,7 @@ namespace Proj0.MAUI.ViewModels
             //ADD ARRAY OF INTEGERS ON BILL, USE TO FILTER THROUGH WHICH TO DELETE
             //ADD INTEGERS ON CREATION OF A BILL
             BillService.Current.Delete(TimeService.Current.Get(id).BillId);
-            foreach(Time times in TimeService.Current.Times)
+            foreach(TimeDTO times in TimeService.Current.Times)
             {
                 if(TimeService.Current.Get(id).BillId == times.BillId)
                 {
@@ -91,7 +92,7 @@ namespace Proj0.MAUI.ViewModels
             NotifyPropertyChanged(nameof(hours));
         }
 
-        public TimeDetailViewModel(Time time)
+        public TimeDetailViewModel(TimeDTO time)
         {
             Model = time;
             SetupCommands();
@@ -105,7 +106,7 @@ namespace Proj0.MAUI.ViewModels
 
         public TimeDetailViewModel()
         {
-            Model = new Time();
+            Model = new TimeDTO();
             SetupCommands();
         }
 
@@ -145,10 +146,10 @@ namespace Proj0.MAUI.ViewModels
                 {
                     Model.ProjectId = proId;
                     Model.BillId = -1;
-                    TimeService.Current.Add(Model);
+                    TimeService.Current.AddOrEdit(Model);
                 }
             }
-            Model = new Time();
+            Model = new TimeDTO();
         }
 
         public void Edit()
@@ -186,7 +187,8 @@ namespace Proj0.MAUI.ViewModels
             {
                 Model.Date = DateTime.MinValue;
             }
-            Model = new Time();
+            TimeService.Current.AddOrEdit(Model);
+            Model = new TimeDTO();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

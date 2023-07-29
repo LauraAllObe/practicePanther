@@ -32,7 +32,7 @@ namespace Proj0.MAUI.ViewModels
             EmployeeService.Current.Delete(id);
             while(true)
             {
-                foreach (Time time in TimeService.Current.Times)
+                foreach (TimeDTO time in TimeService.Current.Times)
                 {
                     if (time.EmployeeId == id)
                     {

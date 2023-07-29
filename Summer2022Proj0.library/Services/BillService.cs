@@ -1,24 +1,20 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using Summer2022Proj0.library.DTO;
 using Summer2022Proj0.library.Models;
+using Summer2022Proj0.Library.Utilities;
 
 namespace Summer2022Proj0.library.Services
 {
     public class BillService
     {
-        private List<Bill> bills;
-        public List<Bill> Bills
-        {
-            get
-            {
-                return bills;
-            }
-        }
         private static BillService? instance;
         private static object _lock = new object();
         public static BillService Current
@@ -35,66 +31,64 @@ namespace Summer2022Proj0.library.Services
                 return instance;
             }
         }
-
         private BillService()
         {
-            bills = new List<Bill>();
-            /*projects = new List<Project>()
-            {
-                new Project{ClientId = 1, Id=1, ClosedDate=DateTime.Now, OpenDate=DateTime.Today, IsActive=true, LongName="longname1", ShortName="shortname1"},
-                new Project{ClientId = 1, Id=2, ClosedDate=DateTime.Now, OpenDate=DateTime.Today, IsActive=true, LongName="longname2", ShortName="shortname2"}
-            };*/
+            var response = new WebRequestHandler()
+                    .Get("/Bill")
+                    .Result;
+            bills = JsonConvert
+                .DeserializeObject<List<BillDTO>>(response)
+                ?? new List<BillDTO>();
+
         }
-        public Bill? Get(int id)
+        private List<BillDTO> bills;
+        public List<BillDTO> Bills
         {
-            return Bills.FirstOrDefault(p => p.Id == id);
-        }
-        public void Add(Bill? bill)
-        {
-            if (bill != null)
+            get
             {
-                if (bill.Id == 0)
+                return bills ?? new List<BillDTO>();
+            }
+        }
+        public BillDTO? Get(int id)
+        {
+            return Bills.FirstOrDefault(b => b.Id == id);
+        }
+        public void AddOrEdit(BillDTO b)
+        {
+            var response
+                = new WebRequestHandler().Post("/Bill", b).Result;
+            //MISSING CODE
+            var myEditedBill = JsonConvert.DeserializeObject<BillDTO>(response);
+            if (myEditedBill != null)
+            {
+                var existingBill = bills.FirstOrDefault(b => b.Id == myEditedBill.Id);
+                if (existingBill == null)
                 {
-                    bill.Id = FreeId;
+                    bills.Add(myEditedBill);
                 }
-                bills.Add(bill);
+                else
+                {
+                    var index = bills.IndexOf(existingBill);
+                    bills.Remove(existingBill);
+                    bills.Insert(index, myEditedBill);
+                }
             }
         }
         public void Delete(int id)
         {
-            var enrollmentToRemove = Get(id);
-            if (enrollmentToRemove != null)
+            var billToDelete = Bills.FirstOrDefault(b => b.Id == id);
+            if (billToDelete != null)
             {
-                bills.Remove(enrollmentToRemove);
+                var response
+                = new WebRequestHandler().Delete($"/Bill/Delete/{id}").Result;
+                Bills.Remove(billToDelete);
             }
         }
-
-        private int FreeId
+        public IEnumerable<BillDTO> Search(string query)
         {
-            get
-            {
-                bool currentExists;
-                for (int i = 1; i > 0; i++)
-                {
-                    currentExists = false;
-                    foreach (var bill in bills)
-                    {
-                        if (bill.Id == i)
-                        {
-                            currentExists = true;
-                            break;
-                        }
-                    }
-                    if (currentExists == false)
-                        return i;
-                }
-                return 0;
-            }
-        }
-
-        public IEnumerable<Bill> Search(string query)
-        {
-            return bills.Where(s => (s.DueDate.ToString()).Contains(query.ToUpper()));
+            return Bills
+                .Where(b => b.DueDate.ToString().ToUpper()
+                .Contains(query.ToUpper()));
         }
     }
 }

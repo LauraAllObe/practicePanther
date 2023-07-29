@@ -18,10 +18,7 @@ public partial class ProjectDetailView : ContentPage
 
     private void OkClicked(object sender, EventArgs e)
     {
-        if ((!(ProjectId > 0)) && ClientId > 0)
-            (BindingContext as ProjectDetailViewModel).Add();
-        else if (ClientId > 0 && ProjectId > 0)
-            (BindingContext as ProjectDetailViewModel).Edit();
+        (BindingContext as ProjectDetailViewModel).AddOrEdit();
         Shell.Current.GoToAsync($"//Projects?clientId={ClientId}");
     }
 
