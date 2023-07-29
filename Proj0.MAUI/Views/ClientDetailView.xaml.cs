@@ -16,10 +16,7 @@ public partial class ClientDetailView : ContentPage
 
     private void OkClicked(object sender, EventArgs e)
     {
-        if(!(ClientId > 0))
-            (BindingContext as ClientDetailViewModel).Add();
-        else
-            (BindingContext as ClientDetailViewModel).Edit();
+        (BindingContext as ClientDetailViewModel).AddOrEdit();
         Shell.Current.GoToAsync("//Clients");
     }
 

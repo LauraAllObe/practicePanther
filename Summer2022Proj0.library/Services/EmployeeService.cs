@@ -88,21 +88,6 @@ namespace Summer2022Proj0.library.Services
         }
         public void Delete(int id)
         {
-            /*
-            var employeeToRemove = Get(id);
-            if (employeeToRemove != null)
-            {
-                employees.Remove(employeeToRemove);
-            }*/
-
-            /*
-             var response = new WebRequestHandler()
-                .Get("/Client/GetClients/{id}")
-                .Result;
-            var employee = JsonConvert.DeserializeObject<Employee>(response);
-            return employee;
-             */
-            //MISSING CODE
             var employeeToDelete = Employees.FirstOrDefault(e => e.Id == id);
             if(employeeToDelete != null)
             {
@@ -114,7 +99,7 @@ namespace Summer2022Proj0.library.Services
         public IEnumerable<EmployeeDTO> Search(string query)
         {
             return Employees
-                .Where(s => s.Name.ToUpper()
+                .Where(e => e.Name.ToUpper()
                 .Contains(query.ToUpper()));
         }
     }

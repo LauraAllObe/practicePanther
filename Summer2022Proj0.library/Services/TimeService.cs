@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using Summer2022Proj0.library.DTO;
 using Summer2022Proj0.library.Models;
+using Summer2022Proj0.Library.Utilities;
 
 namespace Summer2022Proj0.library.Services
 {
@@ -27,72 +31,63 @@ namespace Summer2022Proj0.library.Services
                 return instance;
             }
         }
-        private List<Time> times;
         private TimeService()
         {
-            times = new List<Time>();
-            /*
-            times = new List<Time>
-            {
-                new Time{Id = 1, Date = DateTime.Today, Narrative = "did a lot of stuff", Hours = 2.5, ProjectId = 0, EmployeeId = 0},
-                new Time{Id = 2, Date = DateTime.MaxValue, Narrative = "not yet done", Hours = 5, ProjectId = 1, EmployeeId = 2},
-                new Time{Id = 3, Date = DateTime.MinValue, Narrative = "completed everything", Hours = 10, ProjectId = 15, EmployeeId = 12}
-            };*/
+            var response = new WebRequestHandler()
+                    .Get("/Time")
+                    .Result;
+            times = JsonConvert
+                .DeserializeObject<List<TimeDTO>>(response)
+                ?? new List<TimeDTO>();
         }
-        public List<Time> Times
+        private List<TimeDTO> times;
+        public List<TimeDTO> Times
         {
             get
             {
-                return times;
+                return times ?? new List<TimeDTO>();
             }
         }
-        public Time? Get(int id)//? means returns explicit null
+        public TimeDTO? Get(int id)
         {
-            return times.FirstOrDefault(e => e.Id == id);
+            return Times.FirstOrDefault(t => t.Id == id);
         }
-        public void Add(Time? time)
+        public void AddOrEdit(TimeDTO t)
         {
-            bool timeExists = false;
-            int validId = 0;
-            for (int i = 1; i > 0; i++)
+            var response
+                = new WebRequestHandler().Post("/Time", t).Result;
+            //MISSING CODE
+            var myEditedTime = JsonConvert.DeserializeObject<TimeDTO>(response);
+            if (myEditedTime != null)
             {
-                foreach (Time? each in times)
+                var existingTime = times.FirstOrDefault(t => t.Id == myEditedTime.Id);
+                if (existingTime == null)
                 {
-                    if (i == each.Id)
-                    {
-                        timeExists = true;
-                        break;
-                    }
+                    times.Add(myEditedTime);
                 }
-                if (timeExists == false)
+                else
                 {
-                    validId = i;
-                    break;
+                    var index = times.IndexOf(existingTime);
+                    times.Remove(existingTime);
+                    times.Insert(index, myEditedTime);
                 }
-                timeExists = false;
-            }
-            if (validId != 0 && time != null)
-                time.Id = validId;
-            if (time != null)
-            {
-                times.Add(time);
             }
         }
         public void Delete(int id)
         {
-            var timeToRemove = Get(id);
-            if (timeToRemove != null)
+            var timeToDelete = Times.FirstOrDefault(t => t.Id == id);
+            if (timeToDelete != null)
             {
-                times.Remove(timeToRemove);
+                var response
+                = new WebRequestHandler().Delete($"/Time/Delete/{id}").Result;
+                Times.Remove(timeToDelete);
             }
         }
-        public void Delete(Time s)
+        public IEnumerable<TimeDTO> Search(string query)
         {
-            Delete(s.Id);
-        }
-        public IEnumerable<Time> Search(string query)
-        {
-            return times.Where(s => (s.Narrative + s.ProjectId + s.EmployeeId).ToUpper().Contains(query.ToUpper()));
+            return Times
+                .Where(t => t.Narrative.ToUpper()
+                .Contains(query.ToUpper()));
         }
     }
 }

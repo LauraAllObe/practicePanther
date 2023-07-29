@@ -48,7 +48,7 @@ namespace Proj0.MAUI.ViewModels
         {
             if (clientId > 0)
             {
-                Client = ClientService.Current.Get(clientId);
+                Client = new Client(ClientService.Current.Get(clientId));
             }
             else
             {

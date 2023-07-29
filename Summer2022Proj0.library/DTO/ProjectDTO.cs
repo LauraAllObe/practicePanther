@@ -1,17 +1,16 @@
-﻿using Summer2022Proj0.library.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using Summer2022Proj0.library.Models;
 
-namespace Summer2022Proj0.library.Models
+namespace Summer2022Proj0.library.DTO
 {
-    public class Project
+    public class ProjectDTO
     {
         private int id;
-        public int Id 
+        public int Id
         {
             get
             {
@@ -19,7 +18,7 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(id != value)
+                if (id != value)
                 {
                     id = value;
                 }
@@ -35,7 +34,7 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(openDate != value)
+                if (openDate != value)
                 {
                     openDate = value;
                 }
@@ -51,7 +50,7 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(closedDate != value)
+                if (closedDate != value)
                 {
                     closedDate = value;
                 }
@@ -67,7 +66,7 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(isActive != value)
+                if (isActive != value)
                 {
                     isActive = value;
                 }
@@ -83,7 +82,7 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(shortName != value)
+                if (shortName != value)
                 {
                     shortName = value;
                 }
@@ -99,7 +98,7 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(longName != value)
+                if (longName != value)
                 {
                     longName = value;
                 }
@@ -115,14 +114,14 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(clientId != value)
+                if (clientId != value)
                 {
                     clientId = value;
                 }
             }
         }
 
-        public Project()
+        public ProjectDTO()
         {
             id = 0;
             longName = "longName";
@@ -132,15 +131,15 @@ namespace Summer2022Proj0.library.Models
             isActive = true;
             clientId = 0;
         }
-        public Project(ProjectDTO dto)
+        public ProjectDTO(Project project)
         {
-            this.Id = dto.Id;
-            this.LongName = dto.LongName;
-            this.ShortName = dto.ShortName;
-            this.OpenDate = dto.OpenDate;
-            this.ClosedDate = dto.ClosedDate;
-            this.IsActive   = dto.IsActive;
-            this.ClientId = dto.ClientId;
+            this.Id = project.Id;
+            this.LongName = project.LongName;
+            this.ShortName = project.ShortName;
+            this.OpenDate = project.OpenDate;
+            this.ClosedDate = project.ClosedDate;
+            this.IsActive = project.IsActive;
+            this.ClientId = project.ClientId;
         }
 
         public override string ToString()

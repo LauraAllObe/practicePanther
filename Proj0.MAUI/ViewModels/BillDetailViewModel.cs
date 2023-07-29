@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Graphics.Text;
 using Proj0.MAUI.Views;
+using Summer2022Proj0.library.DTO;
 using Summer2022Proj0.library.Models;
 using Summer2022Proj0.library.Services;
 using System;
@@ -16,7 +17,7 @@ namespace Proj0.MAUI.ViewModels
 {
     public class BillDetailViewModel : INotifyPropertyChanged
     {
-        public Bill Model { get; set; }
+        public BillDTO Model { get; set; }
         public string dueTime { get; set; }
         public int dueMonth { get; set; }
         public int dueYear { get; set; }
@@ -32,13 +33,13 @@ namespace Proj0.MAUI.ViewModels
 
         public BillDetailViewModel()
         {
-            Model = new Bill();
+            Model = new BillDTO();
             SetUpCommands();
         }
 
         public BillDetailViewModel(int clientId)
         {
-            Model = new Bill { ClientId = clientId };
+            Model = new BillDTO { ClientId = clientId };
             SetUpCommands();
         }
 
@@ -49,13 +50,13 @@ namespace Proj0.MAUI.ViewModels
             else if(clientId > 0 && billId > 0)
                 Model = BillService.Current.Get(billId);
             else if (projectId > 0 && clientId > 0)
-                Model = new Bill { ClientId = clientId, ProjectId = projectId };
+                Model = new BillDTO { ClientId = clientId, ProjectId = projectId };
             else if (clientId > 0)
-                Model = new Bill { ClientId = clientId, ProjectId = 0 };
+                Model = new BillDTO { ClientId = clientId, ProjectId = 0 };
             SetUpCommands();
         }
 
-        public BillDetailViewModel(Bill model)
+        public BillDetailViewModel(BillDTO model)
         {
             Model = model;
             SetUpCommands();
@@ -84,11 +85,11 @@ namespace Proj0.MAUI.ViewModels
                 dueYear = DateTime.MaxValue.Year;
                 
                 totalAmount = 0;
-                foreach (Time time in TimeService.Current.Times)
+                foreach (TimeDTO time in TimeService.Current.Times)
                 {
                     if(Model.ProjectId == 0 && time.Billed == false && time.wantToBill == true)
                     {
-                        foreach(Project project in ProjectService.Current.Projects)
+                        foreach(ProjectDTO project in ProjectService.Current.Projects)
                         {
                             if (time.ProjectId == project.Id && Model.ClientId == project.ClientId)
                                 totalAmount += ((decimal)(time.Hours) * (EmployeeService.Current.Get(time.EmployeeId).Rate));
@@ -124,12 +125,12 @@ namespace Proj0.MAUI.ViewModels
             }
             Model.TotalAmount = totalAmount;
             if (totalAmount > 0)
-                BillService.Current.Add(Model);
-            foreach (Time time in TimeService.Current.Times)
+                BillService.Current.AddOrEdit(Model);
+            foreach (TimeDTO time in TimeService.Current.Times)
             {
                 if (Model.ProjectId == 0 && time.Billed == false && time.wantToBill == true)
                 {
-                    foreach (Project project in ProjectService.Current.Projects)
+                    foreach (ProjectDTO project in ProjectService.Current.Projects)
                     {
                         if (time.ProjectId == project.Id && Model.ClientId == project.ClientId)
                         {
@@ -145,7 +146,7 @@ namespace Proj0.MAUI.ViewModels
                 }
             }
            
-            Model = new Bill();
+            Model = new BillDTO();
         }
     }
 }

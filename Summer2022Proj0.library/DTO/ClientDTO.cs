@@ -1,17 +1,16 @@
-﻿using Summer2022Proj0.library.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using Summer2022Proj0.library.Models;
 
-namespace Summer2022Proj0.library.Models
+namespace Summer2022Proj0.library.DTO
 {
-    public class Project
+    public class ClientDTO
     {
         private int id;
-        public int Id 
+        public int Id
         {
             get
             {
@@ -19,7 +18,7 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(id != value)
+                if (id != value)
                 {
                     id = value;
                 }
@@ -35,7 +34,7 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(openDate != value)
+                if (openDate != value)
                 {
                     openDate = value;
                 }
@@ -51,7 +50,7 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(closedDate != value)
+                if (closedDate != value)
                 {
                     closedDate = value;
                 }
@@ -67,80 +66,62 @@ namespace Summer2022Proj0.library.Models
             }
             set
             {
-                if(isActive != value)
+                if (isActive != value)
                 {
                     isActive = value;
                 }
             }
         }
 
-        private String shortName;
-        public String ShortName
+        private String name;
+        public String Name
         {
             get
             {
-                return shortName;
+                return name;
             }
             set
             {
-                if(shortName != value)
+                if (name != value)
                 {
-                    shortName = value;
+                    name = value;
                 }
             }
         }
 
-        private String longName;
-        public String LongName
+        private String notes;
+        public String Notes
         {
             get
             {
-                return longName;
+                return notes;
             }
             set
             {
-                if(longName != value)
+                if (notes != value)
                 {
-                    longName = value;
+                    notes = value;
                 }
             }
         }
 
-        private int clientId;
-        public int ClientId
+        public ClientDTO()
         {
-            get
-            {
-                return clientId;
-            }
-            set
-            {
-                if(clientId != value)
-                {
-                    clientId = value;
-                }
-            }
-        }
-
-        public Project()
-        {
+            notes = "N/A";
+            name = "John/Jane Doe";
             id = 0;
-            longName = "longName";
-            shortName = "shortName";
             openDate = DateTime.MinValue;
-            closedDate = DateTime.MaxValue;
+            closedDate = DateTime.MinValue;
             isActive = true;
-            clientId = 0;
         }
-        public Project(ProjectDTO dto)
+        public ClientDTO(Client client)
         {
-            this.Id = dto.Id;
-            this.LongName = dto.LongName;
-            this.ShortName = dto.ShortName;
-            this.OpenDate = dto.OpenDate;
-            this.ClosedDate = dto.ClosedDate;
-            this.IsActive   = dto.IsActive;
-            this.ClientId = dto.ClientId;
+            this.Notes = client.Notes;
+            this.Name = client.Name;
+            this.Id = client.Id;
+            this.OpenDate = client.OpenDate;
+            this.ClosedDate = client.ClosedDate;
+            this.IsActive = client.IsActive;
         }
 
         public override string ToString()
@@ -148,10 +129,8 @@ namespace Summer2022Proj0.library.Models
             string isActiveString = "not an Active";
             if (isActive == true)
                 isActiveString = "an Active";
-            string linked = "not linked to a client.";
-            if (clientId != 0)
-                linked = $"linked to a client {clientId}.";
-            return $"{id}. Short name {shortName}, long name {longName} is {isActiveString} project open from {openDate} up until {closedDate}. This project {linked}";
+
+            return $"{id}. {name} is {isActiveString} client open from {openDate} up until {closedDate}. Notes: {notes}";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Proj0.MAUI.Views;
+using Summer2022Proj0.library.DTO;
 using Summer2022Proj0.library.Models;
 using Summer2022Proj0.library.Services;
 using System;
@@ -15,7 +16,7 @@ namespace Proj0.MAUI.ViewModels
 {
     public class ProjectDetailViewModel : INotifyPropertyChanged
     {
-        public Project Model { get; set; }
+        public ProjectDTO Model { get; set; }
         public string openTime { get; set; }
         public int openMonth { get; set; }
         public int openYear { get; set; }
@@ -38,13 +39,13 @@ namespace Proj0.MAUI.ViewModels
 
         public ProjectDetailViewModel()
         {
-            Model = new Project();
+            Model = new ProjectDTO();
             SetUpCommands();
         }
 
         public ProjectDetailViewModel(int clientId)
         {
-            Model = new Project { ClientId = clientId };
+            Model = new ProjectDTO { ClientId = clientId };
             SetUpCommands();
         }
 
@@ -53,11 +54,11 @@ namespace Proj0.MAUI.ViewModels
             if(projectId > 0 && clientId > 0)
                 Model = ProjectService.Current.Get(projectId);
             else if(clientId > 0)
-                Model = new Project { ClientId = clientId };
+                Model = new ProjectDTO { ClientId = clientId };
             SetUpCommands();
         }
 
-        public ProjectDetailViewModel(Project model)
+        public ProjectDetailViewModel(ProjectDTO model)
         {
             Model = model;
             SetUpCommands();
@@ -77,12 +78,12 @@ namespace Proj0.MAUI.ViewModels
         }
         
         public ICommand DeleteCommand { get; private set; }
-        public void ExecuteDelete(Project project)
+        public void ExecuteDelete(ProjectDTO project)
         {
             bool end = false;
             while (true)
             {
-                foreach (Time time in TimeService.Current.Times)
+                foreach (TimeDTO time in TimeService.Current.Times)
                 {
                     if (time.ProjectId == project.Id)
                     {
@@ -106,7 +107,7 @@ namespace Proj0.MAUI.ViewModels
             ProjectService.Current.Delete(project.Id);
         }
         public ICommand EditCommand { get; private set; }
-        public void ExecuteEdit(Project project)
+        public void ExecuteEdit(ProjectDTO project)
         {
             int ClientId = project.ClientId;
             int ProjectId = project.Id;
@@ -114,7 +115,7 @@ namespace Proj0.MAUI.ViewModels
         }
 
         public ICommand BillViewCommand { get; private set; }
-        public void ExecuteBillView(Project project)
+        public void ExecuteBillView(ProjectDTO project)
         {
             int ClientId = project.ClientId;
             int ProjectId = project.Id;
@@ -174,18 +175,6 @@ namespace Proj0.MAUI.ViewModels
             NotifyPropertyChanged(nameof(longName));
             NotifyPropertyChanged(nameof(isActive));
         }
-        public void Add()
-        {
-            AddOrEdit();
-            ProjectService.Current.Add(Model);
-            Model = new Project();
-        }
-
-        public void Edit()
-        {
-            AddOrEdit();
-            Model = new Project();
-        }
 
         public void AddOrEdit()
         {
@@ -210,6 +199,8 @@ namespace Proj0.MAUI.ViewModels
             Model.LongName = longName;
             Model.ShortName = shortName;
             Model.IsActive = isActive;
+            ProjectService.Current.AddOrEdit(Model);
+            Model = new ProjectDTO();
         }
 
         public void Active(bool isA)

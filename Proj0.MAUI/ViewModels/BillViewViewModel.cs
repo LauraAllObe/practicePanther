@@ -1,4 +1,5 @@
-﻿using Summer2022Proj0.library.Models;
+﻿using Summer2022Proj0.library.DTO;
+using Summer2022Proj0.library.Models;
 using Summer2022Proj0.library.Services;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Proj0.MAUI.ViewModels
                     decimal grossTotal = 0;
                     if (Project.Id > 0)
                     {
-                        foreach (Bill bill in BillService.Current.Bills)
+                        foreach (BillDTO bill in BillService.Current.Bills)
                         {
                             if (bill.ClientId == Client.Id && bill.ProjectId == Project.Id)
                                 grossTotal += bill.TotalAmount;
@@ -35,7 +36,7 @@ namespace Proj0.MAUI.ViewModels
                     }
                     else
                     {
-                        foreach (Bill bill in BillService.Current.Bills)
+                        foreach (BillDTO bill in BillService.Current.Bills)
                         {
                             if (bill.ClientId == Client.Id)
                                 grossTotal += bill.TotalAmount;
@@ -80,12 +81,12 @@ namespace Proj0.MAUI.ViewModels
         {
             if (clientId > 0 && projectId > 0)
             {
-                Client = ClientService.Current.Get(clientId);
-                Project = ProjectService.Current.Get(projectId);
+                Client = new Client(ClientService.Current.Get(clientId));
+                Project = new Project(ProjectService.Current.Get(projectId));
             }
             else if(clientId > 0)
             {
-                Client = ClientService.Current.Get(clientId);
+                Client = new Client(ClientService.Current.Get(clientId));
                 Project = new Project();
             }
             else
