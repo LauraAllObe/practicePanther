@@ -1,57 +1,51 @@
 ﻿using Summer2022Proj0.library.Models;
 using Summer2022Proj0.library.DTO;
 using Summer2022Proj0.API.Database;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace Summer2022Proj0.API.EC
 {
     public class EmployeeEC
     {
+        private EfContext ef = new EfContextFactory().CreateDbContext(new string[0]);
         public EmployeeDTO AddOrEdit(EmployeeDTO dto)
         {
-            if(dto.Id > 0)
-            {
-                var employeeToUpdate
-                    = EmployeeDatabase.Employees
-                    .FirstOrDefault(e => e.Id == dto.Id);
-                if(employeeToUpdate != null)
-                {
-                    EmployeeDatabase.Employees.Remove(employeeToUpdate);
-                }
-                EmployeeDatabase.Employees.Add(new Employee(dto));
-            }
+            var employee = new Employee(dto);
+            if(dto.Id <= 0)
+                ef.Employees.Add(employee);
             else
-            {
-                dto.Id = EmployeeDatabase.LastEmployeeId + 1;
-                EmployeeDatabase.Employees.Add(new Employee(dto));
-            }
-            return dto;
+                ef.Employees.Update(employee);
+            ef.SaveChanges();
+            
+            return new EmployeeDTO(employee);
         }
 
         public EmployeeDTO? Get(int id)
         {
-            var returnVal = EmployeeDatabase.Employees
-                .FirstOrDefault(e => e.Id == id)
-                ?? new Employee();
+            var returnVal = ef.Employees
+                    .FirstOrDefault(e => e.Id == id)
+                    ?? new Employee();
             return new EmployeeDTO(returnVal);
         }
 
         public EmployeeDTO? Delete(int id)
         {
-            var employeeToDelete = EmployeeDatabase.Employees.FirstOrDefault(e => e.Id == id);
-            if (employeeToDelete != null)
-                EmployeeDatabase.Employees.Remove(employeeToDelete);
-            return employeeToDelete != null ?
-                new EmployeeDTO(employeeToDelete)
-                : null;
+            var employee = ef.Employees.FirstOrDefault(e => e.Id == id);
+            if (employee != null)
+                ef.Employees.Remove(employee);
+            ef.SaveChanges();
+            return employee != null ? new EmployeeDTO(employee) : null;
         }
 
         public IEnumerable<EmployeeDTO> Search(string query = "")
         {
-            return EmployeeDatabase.Employees
-                .Where(e => e.Name.ToUpper()
-                .Contains(query.ToUpper()))
-                .Take(1000)
-                .Select(e => new EmployeeDTO(e));
+            IEnumerable<EmployeeDTO> returnVal = ef.Employees
+                    .Where(e => e.Name.ToUpper()
+                    .Contains(query.ToUpper()))
+                    .Take(1000)
+                    .Select(e => new EmployeeDTO(e));
+            return returnVal;
         }
     }
 }
