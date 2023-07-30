@@ -41,7 +41,6 @@ namespace Proj0.MAUI.ViewModels
                             BillService.Current.Delete(time.BillId);
                         end = false;
                         break;
-
                     }
                     if(TimeService.Current.Times.Last() == time)
                     {

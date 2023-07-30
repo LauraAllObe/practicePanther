@@ -12,7 +12,7 @@ using Summer2022Proj0.API.Database;
 namespace Summer2022Proj0.API.Migrations
 {
     [DbContext(typeof(EfContext))]
-    [Migration("20230729230928_Initial0")]
+    [Migration("20230730032557_Initial0")]
     partial class Initial0
     {
         /// <inheritdoc />
