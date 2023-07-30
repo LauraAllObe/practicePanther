@@ -53,7 +53,7 @@ namespace Summer2022Proj0.library.Services
         {
             return Bills.FirstOrDefault(b => b.Id == id);
         }
-        public void AddOrEdit(BillDTO b)
+        public BillDTO AddOrEdit(BillDTO b)
         {
             var response
                 = new WebRequestHandler().Post("/Bill", b).Result;
@@ -73,6 +73,7 @@ namespace Summer2022Proj0.library.Services
                     bills.Insert(index, myEditedBill);
                 }
             }
+            return myEditedBill;
         }
         public void Delete(int id)
         {

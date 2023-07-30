@@ -124,11 +124,11 @@ namespace Proj0.MAUI.ViewModels
                 Model.DueDate = DateTime.MinValue;
             }
             Model.TotalAmount = totalAmount;
-            if (totalAmount > 0)
-                BillService.Current.AddOrEdit(Model);
+            if(totalAmount > 0)
+                Model = BillService.Current.AddOrEdit(Model);
             foreach (TimeDTO time in TimeService.Current.Times)
             {
-                if (Model.ProjectId == 0 && time.Billed == false && time.wantToBill == true)
+                if (totalAmount > 0 && Model.ProjectId == 0 && time.Billed == false && time.wantToBill == true)
                 {
                     foreach (ProjectDTO project in ProjectService.Current.Projects)
                     {
@@ -139,13 +139,12 @@ namespace Proj0.MAUI.ViewModels
                         }
                     }
                 }
-                else if (time.ProjectId == Model.ProjectId && time.Billed == false && time.wantToBill == true)
+                else if (totalAmount > 0 && time.ProjectId == Model.ProjectId && time.Billed == false && time.wantToBill == true)
                 {
                     time.Billed = true;
                     time.BillId = Model.Id;
                 }
             }
-           
             Model = new BillDTO();
         }
     }
