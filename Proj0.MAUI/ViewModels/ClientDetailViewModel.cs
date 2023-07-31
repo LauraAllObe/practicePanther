@@ -39,8 +39,8 @@ namespace Proj0.MAUI.ViewModels
         
         public void SetUpCommands()
         {
-            openTime = Model.OpenDate.TimeOfDay.ToString();
-            closedTime = Model.ClosedDate.TimeOfDay.ToString();
+            openTime = Model.OpenDate.TimeOfDay.ToString().Split('.')[0];
+            closedTime = Model.ClosedDate.TimeOfDay.ToString().Split('.')[0];
             openDay = Model.OpenDate.Day;
             closedDay = Model.ClosedDate.Day;
             openMonth = Model.OpenDate.Month;

@@ -64,7 +64,15 @@ namespace Proj0.MAUI.ViewModels
 
         public void SetupCommands()
         {
-            Time = Model.Date.TimeOfDay.ToString();
+            if (Model.Id > 0)
+            {
+                if (Model.Billed == true)
+                    IsVisible = false;
+                else
+                    IsVisible = true;
+            }
+
+            Time = Model.Date.TimeOfDay.ToString().Split('.')[0];
             Day = Model.Date.Day;
             Month = Model.Date.Month;
             Year = Model.Date.Year;
@@ -139,10 +147,16 @@ namespace Proj0.MAUI.ViewModels
                 if (employee.Id == empId)
                     employeeExists = true;
             }
+            bool projectClosed = false;
+            if (ProjectService.Current.Get(proId).IsActive == false)
+                projectClosed = true;
+            bool clientClosed = false;
+            if (ClientService.Current.Get(ProjectService.Current.Get(proId).ClientId).IsActive == false)
+                clientClosed = true;
             if (employeeExists == true)
             {
                 Model.EmployeeId = empId;
-                if (projectExists == true)
+                if (projectExists == true && (int)Model.Hours > 0 && projectClosed == false && clientClosed == false)
                 {
                     Model.ProjectId = proId;
                     Model.BillId = -1;
@@ -154,6 +168,9 @@ namespace Proj0.MAUI.ViewModels
 
         public void Edit()
         {
+            bool clientClosed = false;
+            if (ClientService.Current.Get(ProjectService.Current.Get(proId).ClientId).IsActive == false)
+                clientClosed = true;
             bool projectExists = false;
             foreach (var projects in ProjectService.Current.Projects)
             {
@@ -169,12 +186,17 @@ namespace Proj0.MAUI.ViewModels
             if (employeeExists == true)
             {
                 Model.EmployeeId = empId;
-                if (projectExists == true)
+                if (projectExists == true && clientClosed == false)
                     Model.ProjectId = proId;
             }
+            bool projectClosed = false;
+            if (ProjectService.Current.Get(Model.ProjectId).IsActive == false)
+                projectClosed = true;
+            
 
             Model.Narrative = narrative;
-            Model.Hours = hours;
+            if((int)hours > 0)
+                Model.Hours = hours;
             DateTime temp;
             if (DateTime.TryParse(Month.ToString() + '/' + Day.ToString() + '/' + Year.ToString() + ' ' + Time, out temp))
             {
@@ -187,7 +209,8 @@ namespace Proj0.MAUI.ViewModels
             {
                 Model.Date = DateTime.MinValue;
             }
-            TimeService.Current.AddOrEdit(Model);
+            if ((int)Model.Hours > 0 && projectClosed == false && clientClosed == false)
+                TimeService.Current.AddOrEdit(Model);
             Model = new TimeDTO();
         }
 
@@ -197,5 +220,7 @@ namespace Proj0.MAUI.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public bool IsVisible { get; set; }
     }
 }

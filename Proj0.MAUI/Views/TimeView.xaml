@@ -46,6 +46,7 @@
                                     Grid.Column="1" 
                                     Command="{Binding Path=EditCommand}" 
                                     CommandParameter="{Binding}"
+                                    IsVisible="{Binding Path=IsVisible}"
                                     Clicked="EditClicked"
                                     Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\edit.png"
                                 />

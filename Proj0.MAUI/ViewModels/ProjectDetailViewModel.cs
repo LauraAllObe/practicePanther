@@ -1,4 +1,5 @@
-﻿using Proj0.MAUI.Views;
+﻿using Microsoft.Maui.Graphics.Text;
+using Proj0.MAUI.Views;
 using Summer2022Proj0.library.DTO;
 using Summer2022Proj0.library.Models;
 using Summer2022Proj0.library.Services;
@@ -139,8 +140,22 @@ namespace Proj0.MAUI.ViewModels
 
         public void SetUpCommands()
         {
-            openTime = Model.OpenDate.TimeOfDay.ToString();
-            closedTime = Model.ClosedDate.TimeOfDay.ToString();
+            if(Model.Id > 0)
+            {
+                bool clientClosed = false;
+                if (ClientService.Current.Get(ProjectService.Current.Get(Model.Id).ClientId).IsActive == false)
+                    clientClosed = true;
+                bool projectClosed = false;
+                if (ProjectService.Current.Get(Model.Id).IsActive == false)
+                    projectClosed = true;
+                if (clientClosed == true || projectClosed == true)
+                    IsVisible = false;
+                else
+                    IsVisible = true;
+            }
+            
+            openTime = Model.OpenDate.TimeOfDay.ToString().Split('.')[0];
+            closedTime = Model.ClosedDate.TimeOfDay.ToString().Split('.')[0];
             openDay = Model.OpenDate.Day;
             closedDay = Model.ClosedDate.Day;
             openMonth = Model.OpenDate.Month;
@@ -199,6 +214,14 @@ namespace Proj0.MAUI.ViewModels
             Model.LongName = longName;
             Model.ShortName = shortName;
             Model.IsActive = isActive;
+            
+            if(isActive == true)
+            {
+                var tempClient = ClientService.Current.Get(Model.ClientId);
+                tempClient.IsActive = true;
+                ClientService.Current.AddOrEdit(tempClient);
+            }
+
             ProjectService.Current.AddOrEdit(Model);
             Model = new ProjectDTO();
         }
@@ -207,5 +230,7 @@ namespace Proj0.MAUI.ViewModels
         {
             isActive = isA;
         }
+
+        public bool IsVisible { get; set; }
     }
 }

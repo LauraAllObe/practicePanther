@@ -79,7 +79,7 @@ namespace Proj0.MAUI.ViewModels
         {
             if(Model != null)
             {
-                dueTime = DateTime.MaxValue.TimeOfDay.ToString();
+                dueTime = DateTime.MaxValue.TimeOfDay.ToString().Split('.')[0];
                 dueDay = DateTime.MaxValue.Day;
                 dueMonth = DateTime.MaxValue.Month;
                 dueYear = DateTime.MaxValue.Year;
@@ -126,25 +126,44 @@ namespace Proj0.MAUI.ViewModels
             Model.TotalAmount = totalAmount;
             if(totalAmount > 0)
                 Model = BillService.Current.AddOrEdit(Model);
-            foreach (TimeDTO time in TimeService.Current.Times)
+            bool end = false;
+            while (true)
             {
-                if (totalAmount > 0 && Model.ProjectId == 0 && time.Billed == false && time.wantToBill == true)
+                foreach (TimeDTO time in TimeService.Current.Times)
                 {
-                    foreach (ProjectDTO project in ProjectService.Current.Projects)
+                    bool toBreak = false;
+                    if (totalAmount > 0 && Model.ProjectId == 0 && time.Billed == false && time.wantToBill == true)
                     {
-                        if (time.ProjectId == project.Id && Model.ClientId == project.ClientId)
+                        foreach (ProjectDTO project in ProjectService.Current.Projects)
                         {
-                            time.Billed = true;
-                            time.BillId = Model.Id;
+                            if (time.ProjectId == project.Id && Model.ClientId == project.ClientId)
+                            {
+                                time.Billed = true;
+                                time.BillId = Model.Id;
+                                TimeService.Current.AddOrEdit(time);
+                                toBreak = true;
+                            }
                         }
                     }
+                    else if (totalAmount > 0 && time.ProjectId == Model.ProjectId && time.Billed == false && time.wantToBill == true)
+                    {
+                        time.Billed = true;
+                        time.BillId = Model.Id;
+                        TimeService.Current.AddOrEdit(time);
+                        toBreak = true;
+                    }
+                    if (TimeService.Current.Times.Last() == time)
+                    {
+                        end = true;
+                    }
+                    if (toBreak == true)
+                        break;
                 }
-                else if (totalAmount > 0 && time.ProjectId == Model.ProjectId && time.Billed == false && time.wantToBill == true)
-                {
-                    time.Billed = true;
-                    time.BillId = Model.Id;
-                }
+                if (end == true)
+                    break;
             }
+            if (totalAmount > 0)
+                Model = BillService.Current.AddOrEdit(Model);
             Model = new BillDTO();
         }
     }
