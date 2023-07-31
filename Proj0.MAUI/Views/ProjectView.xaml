@@ -54,6 +54,7 @@
                             <ImageButton
                                     Grid.Column="1" 
                                     Command="{Binding Path=TimerCommand}"
+                                    IsVisible="{Binding Path=IsVisible}"
                                     Source="C:\Users\laura\source\repos\Summer2022Proj0\Proj0.MAUI\Resources\Images\timer.png"
                                 />
                             <ImageButton

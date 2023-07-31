@@ -111,7 +111,7 @@ namespace Summer2022Proj0.library.DTO
             string projects = $"project {projectId}";
             if (projectId == 0)
                 projects = $"one or more projects";
-            return $"{id}. Client {clientId}'s bill for {projects} of {totalAmount}$ is due on {dueDate}.";
+            return $"{id}. Client {clientId}'s bill for {projects} of {totalAmount.ToString("F2")}$ is due on {dueDate}.";
         }
     }
 }
