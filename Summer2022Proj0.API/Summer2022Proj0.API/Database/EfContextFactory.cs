@@ -14,7 +14,7 @@ namespace Summer2022Proj0.API.Database
                .AddJsonFile("appsettings.json", true, true)
                .Build();
 
-            connectionString = config["ConnectionStrings:Proj0_DB9"];
+            connectionString = config["ConnectionStrings:Proj0_DB11"];
         }
         public EfContext CreateDbContext(string[] args)
         {

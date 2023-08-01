@@ -148,10 +148,10 @@ namespace Proj0.MAUI.ViewModels
                     employeeExists = true;
             }
             bool projectClosed = false;
-            if (ProjectService.Current.Get(proId).IsActive == false)
+            if (ProjectService.Current.Get(proId) != null && ProjectService.Current.Get(proId).IsActive == false)
                 projectClosed = true;
             bool clientClosed = false;
-            if (ClientService.Current.Get(ProjectService.Current.Get(proId).ClientId).IsActive == false)
+            if (ProjectService.Current.Get(proId) != null && ClientService.Current.Get(ProjectService.Current.Get(proId).ClientId).IsActive == false)
                 clientClosed = true;
             if (employeeExists == true)
             {
@@ -169,7 +169,7 @@ namespace Proj0.MAUI.ViewModels
         public void Edit()
         {
             bool clientClosed = false;
-            if (ClientService.Current.Get(ProjectService.Current.Get(proId).ClientId).IsActive == false)
+            if (ProjectService.Current.Get(proId) != null && ClientService.Current.Get(ProjectService.Current.Get(proId).ClientId).IsActive == false)
                 clientClosed = true;
             bool projectExists = false;
             foreach (var projects in ProjectService.Current.Projects)
