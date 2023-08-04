@@ -44,12 +44,29 @@ namespace Proj0.MAUI.ViewModels
             //ADD ARRAY OF INTEGERS ON BILL, USE TO FILTER THROUGH WHICH TO DELETE
             //ADD INTEGERS ON CREATION OF A BILL
             BillService.Current.Delete(TimeService.Current.Get(id).BillId);
-            foreach(TimeDTO times in TimeService.Current.Times)
+            bool end = false;
+            while (true)
             {
-                if(TimeService.Current.Get(id).BillId == times.BillId)
+                foreach (TimeDTO times in TimeService.Current.Times)
                 {
-                    times.Billed = false;
+                    if(TimeService.Current.Get(id).BillId == times.BillId)
+                    {
+                        times.Billed = false;
+                        if(id != times.Id)
+                        {
+                            TimeService.Current.Delete(times.Id);
+                            break;
+                        }
+                    }
+                    if (TimeService.Current.Times.Last() == times)
+                    {
+                        end = true;
+                    }
                 }
+                if (TimeService.Current.Times.Count <= 0)
+                    end = true;
+                if (end == true)
+                    break;
             }
             TimeService.Current.Delete(id);
         }
