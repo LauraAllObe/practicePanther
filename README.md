@@ -1,4 +1,5 @@
-# *Practice Panther*
+# Practice Panther  
+A summer 2023 project.  
 
 Table of Contents:
 ==================
